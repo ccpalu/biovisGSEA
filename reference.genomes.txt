@@ -1,0 +1,21 @@
+"Species"	"DB"	"Description"	"Date"
+"1"	"-----------"	""	"There are 19 genomes available, as provided by AnnotationHub"	2018-04-30
+"2"	"Arabidopsis thaliana"	"org.At.tair.db"	"NCBI gene ID based annotations about Arabidopsis thaliana"	2018-04-19
+"3"	"Caenorhabditis elegans"	"org.Ce.eg.db"	"NCBI gene ID based annotations about Caenorhabditis elegans"	2018-04-19
+"15"	"Danio rerio"	"org.Dr.eg.db"	"NCBI gene ID based annotations about Danio rerio"	2018-04-19
+"4"	"Drosophila melanogaster"	"org.Dm.eg.db"	"NCBI gene ID based annotations about Drosophila melanogaster"	2018-04-19
+"18"	"Homo sapiens"	"org.Hs.eg.db"	"NCBI gene ID based annotations about Homo sapiens"	2018-04-19
+"9"	"Mus musculus"	"org.Mm.eg.db"	"NCBI gene ID based annotations about Mus musculus"	2018-04-19
+"7"	"Saccharomyces cerevisiae"	"org.Sc.sgd.db"	"NCBI gene ID based annotations about Saccharomyces cerevisiae"	2018-04-19
+"8"	"Xenopus laevis"	"org.Xl.eg.db"	"NCBI gene ID based annotations about Xenopus laevis"	2018-04-19
+"5"	"Anopheles gambiae"	"org.Ag.eg.db"	"NCBI gene ID based annotations about Anopheles gambiae"	2018-04-19
+"10"	"Bos taurus"	"org.Bt.eg.db"	"NCBI gene ID based annotations about Bos taurus"	2018-04-19
+"14"	"Canis familiaris"	"org.Cf.eg.db"	"NCBI gene ID based annotations about Canis familiaris"	2018-04-19
+"11"	"Escherichia coli (org.EcK12.eg.db)"	"org.EcK12.eg.db"	"NCBI gene ID based annotations about Escherichia coli"	2018-04-19
+"6"	"Escherichia coli (org.EcSakai.eg.db)"	"org.EcSakai.eg.db"	"NCBI gene ID based annotations about Escherichia coli"	2018-04-19
+"19"	"Gallus gallus"	"org.Gg.eg.db"	"NCBI gene ID based annotations about Gallus gallus"	2018-04-19
+"13"	"Macaca mulatta"	"org.Mmu.eg.db"	"NCBI gene ID based annotations about Macaca mulatta"	2018-04-19
+"17"	"Pan troglodytes"	"org.Pt.eg.db"	"NCBI gene ID based annotations about Pan troglodytes"	2018-04-19
+"12"	"Plasmodium falciparum"	"org.Pf.plasmo.db"	"NCBI gene ID based annotations about Plasmodium falciparum"	2018-04-19
+"16"	"Rattus norvegicus"	"org.Rn.eg.db"	"NCBI gene ID based annotations about Rattus norvegicus"	2018-04-19
+"20"	"Sus scrofa"	"org.Ss.eg.db"	"NCBI gene ID based annotations about Sus scrofa"	2018-04-19

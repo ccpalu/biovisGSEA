@@ -1,0 +1,13 @@
+name: BioVis-GSEA
+title: BioVis-GSEA
+username:
+account: nsilico
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 402017
+bundleId: 1676597
+url: https://nsilico.shinyapps.io/BioVis-GSEA/
+when: 1541083249.20667
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: GSEA_1541079402.RData|notes.R|ref.genomes.R
