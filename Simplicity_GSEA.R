@@ -17,6 +17,7 @@ options(repos = BiocInstaller::biocinstallRepos())
 
 library(shiny)
 library(AnnotationDbi)
+
 #I have to call the libraries so all of them are installed in the ShinyApp
 #library(org.Mmu.eg.db);library(org.Cf.eg); library(org.Ag.eg); library(org.Xl.eg);
 ### Error on 1st Nov 2018 ###
@@ -322,11 +323,7 @@ server <- function(input, output, session) {
         library(genomes$DB[sp()], character.only = TRUE)
         },error = function(e){
             e
-            # source("http://bioconductor.org/biocLite.R")
-            # biocLite(genomes$DB[sp()],suppressUpdates=FALSE)
-            # library(genomes$DB[sp()], character.only = TRUE)
-        }
-      )
+        })
     }
     paste(as.character(genomes$Description[sp()]), ' in ', 
           as.character(genomes$Date[sp()]),".", sep="")
