@@ -197,6 +197,20 @@ ui <- fluidPage(
       column(4),
       column(8,uiOutput("enable.gsea"))#column
     )#fluidRow
+  ),#wellPanel
+  
+  ##################
+  ##### STEP 5 #####
+  ##################
+  #https://shiny.rstudio.com/articles/generating-reports.html
+  #http://shiny.rstudio.com/gallery/download-knitr-reports.html
+  wellPanel(
+    tags$h4("5 Results"),
+    #tags$a("test", href="https://google.ie")
+    dataTableOutput('results')
+    #tags$a(textOutput('results'))
+    #tags$a(htmlOutput('results'))
+    
   )#wellPanel
       
 )
@@ -706,12 +720,27 @@ server <- function(input, output, session) {
     }else{
       Universe.Gene.Ann=NULL
     }
-    simplicity_gostats(Gene.Ann, SP, Universe.Sets,Universe.Source,0.05)
-    save(list = ls(all.names = TRUE), 
-          file=sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
+    
+    output$results = renderDataTable(simplicity_gostats(Gene.Ann, SP, Universe.Sets,Universe.Source,0.05),
+                                      escape = FALSE)
+    # save(list = ls(all.names = TRUE), 
+    #       file=sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
     
   })
-
+  
+  ##################
+  ##### STEP 5 #####
+  ##################
+  #output$results <-renderText({
+  # output$results= renderUI({
+  #   # selectInput(inputId = "header.gene", label = "Gene IDs column:",
+  #   #   choices = c("",colnames(data1())))
+  #   a(href="https://www.google.ie", target="_blank")
+  #   
+  # #    dir(path = ".",pattern = "*.html")
+  #  # "https://www.google.ie"
+  # })
+  #   
 }#server
 
 shinyApp(ui = ui, server = server)

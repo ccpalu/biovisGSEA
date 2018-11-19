@@ -5,8 +5,8 @@
 #                             #
 # GSEA made from interface    #
 # input                       #
-# 05/05/2017                  #
-# version: 0.1                #
+# 19/11/2018                  #
+# version: 0.2                #
 ###############################
 ###############################
 
@@ -22,8 +22,41 @@
 ######## Required Libraries###########
 ######################################
 
+doGO <- function(name, gnId, uni, db, pvalue, 
+  onto = c('BP','MF','CC')){
+  
+  for(i in onto){
+    params <- new("GOHyperGParams",
+      geneIds = gnId,
+      universeGeneIds = uni,
+      annotation = db,
+      ontology = i,
+      pvalueCutoff = pvalue,
+      conditional = FALSE,
+      testDirection = "over")
+    hgOver <- hyperGTest(params)
+    #save(hgOver,file = paste(name, i, "hgOver.RData", sep = "."))
+    # htmlReport(hgOver, file = paste(name, i, "hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+    return(summary(hgOver,"htmlLinks" = TRUE))
+    # testDirection(params) <- 'under'
+    # hgUnder <- hyperGTest(params)
+    # 
+    # htmlReport(hgUnder, file = paste(name, i, "hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+  }
+  # params <- new("KEGGHyperGParams", geneIds = gnId,
+  #   annotation = db, universeGeneIds = uni,
+  #   pvalueCutoff = pvalue, testDirection = "over")
+  # hgOver <- hyperGTest(params)
+  # htmlReport(hgOver, file = paste(name, "KEGG.hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+  # 
+  # testDirection(params) <- 'under'
+  # hgUnder <- hyperGTest(params)
+  # 
+  # htmlReport(hgUnder, file = paste(name, "KEGG.hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+  
+}
 
-simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets,Universe.Source,pvalue = 0.025){
+simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, pvalue = 0.025){
   library(GOstats)
   #library(GSEABase)
   library(Category)
@@ -63,44 +96,20 @@ simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets,Universe.Source,pvalu
   if(any(duplicated(Gene.Ann$ENTREZID))){
     Gene.Ann <- Gene.Ann[-which(duplicated(Gene.Ann$ENTREZID)),]
   }
-  doGO <- function(name,gnId, uni,db,pvalue){
-    onto <- c('BP','MF','CC')
-    for(i in onto){
-      params <- new("GOHyperGParams",
-                    geneIds = gnId,
-                    universeGeneIds = uni,
-                    annotation = db,
-                    ontology = i,
-                    pvalueCutoff = pvalue,
-                    conditional = FALSE,
-                    testDirection = "over")
-      hgOver <- hyperGTest(params)
-      htmlReport(hgOver, file = paste(name, i, "hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
-      
-      testDirection(params) <- 'under'
-      hgUnder <- hyperGTest(params)
-      
-      htmlReport(hgUnder, file = paste(name, i, "hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+  if(is.null(Universe.Sets)){
+    for (onto in c('BP','MF','CC')[1]){#!!!
+      result = as.data.frame(doGO(name = 'Simplicity.GSEA.singleSet',
+          gnId = Gene.Ann$ENTREZID, onto = onto,
+          uni =  universe, db = SP$DB, pvalue = pvalue))
+      }
+  }else{#!!!
+  for(i in Universe.Sets[1]){#!!!
+    for(onto in c('BP','MF','CC')[1]){
+      result = as.data.frame(doGO(name = paste('Simplicity.GSEA.set',i, sep = "."),
+          gnId = Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)],
+          uni =  universe, db = SP$DB, pvalue = pvalue, onto = onto))
     }
-    params <- new("KEGGHyperGParams", geneIds = gnId,
-                 annotation = db, universeGeneIds = uni,
-                 pvalueCutoff = pvalue, testDirection = "over")
-    hgOver <- hyperGTest(params)
-    htmlReport(hgOver, file = paste(name, "KEGG.hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
-    
-    testDirection(params) <- 'under'
-    hgUnder <- hyperGTest(params)
-    
-    htmlReport(hgUnder, file = paste(name, "KEGG.hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+  }}
   
-  }
-  
-  
-  for(i in Universe.Sets){
-  
-    doGO(paste('Simplicity.GSEA.set',i, sep = "."),
-         Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)], universe,
-         SP$DB,pvalue)
-  }
-  
+  return(result)
 }
