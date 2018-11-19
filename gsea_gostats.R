@@ -96,18 +96,21 @@ simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, pva
   if(any(duplicated(Gene.Ann$ENTREZID))){
     Gene.Ann <- Gene.Ann[-which(duplicated(Gene.Ann$ENTREZID)),]
   }
+  result <- list()
   if(is.null(Universe.Sets)){
-    for (onto in c('BP','MF','CC')[1]){#!!!
-      result = as.data.frame(doGO(name = 'Simplicity.GSEA.singleSet',
-          gnId = Gene.Ann$ENTREZID, onto = onto,
-          uni =  universe, db = SP$DB, pvalue = pvalue))
+    for (onto in c('BP','MF','CC')){#!!!
+      result = c(result, list(as.data.frame(doGO(name = 'Simplicity.GSEA.singleSet',
+                            gnId = Gene.Ann$ENTREZID, onto = onto,
+                            uni =  universe, db = SP$DB, pvalue = pvalue))))
+      names(result)[length(result)] <- paste0(tolower(onto),1)
       }
   }else{#!!!
   for(i in Universe.Sets[1]){#!!!
-    for(onto in c('BP','MF','CC')[1]){
-      result = as.data.frame(doGO(name = paste('Simplicity.GSEA.set',i, sep = "."),
-          gnId = Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)],
-          uni =  universe, db = SP$DB, pvalue = pvalue, onto = onto))
+    for(onto in c('BP','MF','CC')){
+      result <- c(result, list(as.data.frame(doGO(name = paste('Simplicity.GSEA.set',i, sep = "."),
+                              gnId = Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)],
+                              uni =  universe, db = SP$DB, pvalue = pvalue, onto = onto))))
+      names(result)[length(result)] <- paste0(tolower(onto),i)
     }
   }}
   

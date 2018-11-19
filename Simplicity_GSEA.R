@@ -6,8 +6,8 @@
 # Shiny document for inputting#
 # data to do GSEA analysis    #
 #                             #
-# 01/11/2018                  #
-# version: 0.9                #
+# 19/11/2018                  #
+# version: 0.10               #
 #         under development   #
 ###############################
 ###############################
@@ -58,7 +58,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
     
-    tags$h4("1 Annotation"),
+    tags$h4("1 - Annotation"),
       selectInput(inputId = "species", label = "Select Organism:",
                   choices = genomes$Species)
       
@@ -76,7 +76,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      tags$h4("2 Gene set"),
+      tags$h4("2 - Gene set"),
       fileInput('geneSet.file', 'Choose CSV or tab-delimited File',
                 accept=c('text/csv', 
                          'text/comma-separated-values,text/plain', 
@@ -138,7 +138,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      tags$h4("3 Gene 'universe'"),
+      tags$h4("3 - Gene 'universe'"),
       #uiOutput('step3'),
       uiOutput('universe.source'),
       uiOutput('geneUniverse.file'),
@@ -177,7 +177,7 @@ ui <- fluidPage(
   ##### STEP 4 #####
   ##################
   wellPanel(
-    tags$h4("4 Input validation"),
+    tags$h4("4 - Input validation"),
     fluidRow(
       column(2,tags$strong("Step 1:")),#column
       column(10,textOutput('validate.step1')),
@@ -205,9 +205,14 @@ ui <- fluidPage(
   #https://shiny.rstudio.com/articles/generating-reports.html
   #http://shiny.rstudio.com/gallery/download-knitr-reports.html
   wellPanel(
-    tags$h4("5 Results"),
+    tags$h4("5 - Results"),
     #tags$a("test", href="https://google.ie")
-    dataTableOutput('results')
+    tabsetPanel(type = "tabs",
+      tabPanel("Biological Process 1", dataTableOutput('bp1')),
+      tabPanel("Cellular Component 1", dataTableOutput('cc1')),
+      tabPanel("Molecular Function 1", dataTableOutput('mf1'))
+    )
+    
     #tags$a(textOutput('results'))
     #tags$a(htmlOutput('results'))
     
@@ -388,13 +393,6 @@ server <- function(input, output, session) {
       paste("We have identified", length(universe.sets()), "gene sets.")
     }else return(NULL)
   })
-  # output$colnames.expression <- renderUI({
-  #   if(input$table.infotype=='expr')
-  #     checkboxGroupInput(inputId = "header.expr", label = "Expression profiles:",
-  #                 choices = colnames(data1())[-unique(c(header.gene(), header.set()))],#[-c(1:input$header.gene)],
-  #                 selected = colnames(data1()))#[-c(1:input$header.gene)])
-  #   else NULL
-  # })
  
   
   #################
@@ -700,47 +698,31 @@ server <- function(input, output, session) {
     
     Gene.Ann=Gene.Ann[-which(is.na(Gene.Ann$ENTREZID)),]
     
-    # #Standart columns
-    # if(input$header.gene != 'Gene'){
-    #   if(any(colnames(Data1)=='Gene')){
-    #     colnames(Data1)[which(colnames(Data1)=='Gene')]=='former.Gene'
-    #   }
-    #   colnames(Data1)[which(colnames(Data1)==input$header.gene)]='Gene'  
-    # }
-    # 
-    
-    #GeneList=gene.list()
     Universe.Source = input$universe.source
     
     if(input$universe.source=='new.source'){
       Universe.Gene.Ann = gene.ann.universe()
       Universe.Gene.Ann = Universe.Gene.Ann[-which(is.na(Universe.Gene.Ann$ENTREZID)),]
-      
-      #Universe.GeneList = gene.list.universe()
     }else{
       Universe.Gene.Ann=NULL
     }
     
-    output$results = renderDataTable(simplicity_gostats(Gene.Ann, SP, Universe.Sets,Universe.Source,0.05),
-                                      escape = FALSE)
-    # save(list = ls(all.names = TRUE), 
+    ##################
+    ##### STEP 5 #####
+    ##################
+    result = simplicity_gostats(Gene.Ann, SP, Universe.Sets,Universe.Source,0.05)
+    #for(i in names(results)){
+      output$bp1 = renderDataTable(result[["bp1"]], escape = FALSE)
+      output$cc1 = renderDataTable(result[["cc1"]], escape = FALSE)
+      output$mf1 = renderDataTable(result[["mf1"]], escape = FALSE)
+      
+    #}
+    # save(list = ls(all.names = TRUE),
     #       file=sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
     
   })
   
-  ##################
-  ##### STEP 5 #####
-  ##################
-  #output$results <-renderText({
-  # output$results= renderUI({
-  #   # selectInput(inputId = "header.gene", label = "Gene IDs column:",
-  #   #   choices = c("",colnames(data1())))
-  #   a(href="https://www.google.ie", target="_blank")
-  #   
-  # #    dir(path = ".",pattern = "*.html")
-  #  # "https://www.google.ie"
-  # })
-  #   
+ 
 }#server
 
 shinyApp(ui = ui, server = server)
