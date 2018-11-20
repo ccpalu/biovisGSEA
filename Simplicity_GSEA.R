@@ -34,10 +34,10 @@ load("reference.genomes.RData")
 
 ui <- fluidPage(
   titlePanel("GSEA - Gene Set Enrichment Analysis"),
-  tags$a(href="http://http://www.cit.ie/",
+  tags$a(href="http://www.cit.ie/",
          tags$img(src="www/cit.jpg", height='40'),
          'CIT - Cork Institute of Technology'),
-  tags$a(href="http://http://research.ie/",
+  tags$a(href="http://research.ie/",
          tags$img(src="www/irc_long.jpg", height='50'),
          'IRC - Irish Research Council'),
   tags$a(href="http://nsilico.com/",
@@ -47,7 +47,7 @@ ui <- fluidPage(
          tags$img(src="www/sfi.jpg", height='50'),
          'SFI - Science Foundation Ireland'),
   tags$a(href="http://www.ucc.ie",
-         tags$img(src="www/ucc.png", height='50'),
+         tags$img(src="./www/ucc.png", height='50'),
          'UCC - University College Cork'),
   tags$h3("Uploading Files"),
   
@@ -206,15 +206,7 @@ ui <- fluidPage(
   #http://shiny.rstudio.com/gallery/download-knitr-reports.html
   wellPanel(
     tags$h4("5 - Results"),
-    #tags$a("test", href="https://google.ie")
-    tabsetPanel(type = "tabs",
-      tabPanel("Biological Process 1", dataTableOutput('bp1')),
-      tabPanel("Cellular Component 1", dataTableOutput('cc1')),
-      tabPanel("Molecular Function 1", dataTableOutput('mf1'))
-    )
-    
-    #tags$a(textOutput('results'))
-    #tags$a(htmlOutput('results'))
+    uiOutput('resultsInTabs')
     
   )#wellPanel
       
@@ -661,10 +653,12 @@ server <- function(input, output, session) {
       }
     )
     
-    
     ###### Include the analysis option MP, CC, BP, p-valor
   })
   
+  ##################
+  ##### STEP 5 #####
+  ##################
   
   observeEvent(input$start.gsea, {
     SP = genomes[sp(),]
@@ -707,21 +701,37 @@ server <- function(input, output, session) {
       Universe.Gene.Ann=NULL
     }
     
-    ##################
-    ##### STEP 5 #####
-    ##################
-    result = simplicity_gostats(Gene.Ann, SP, Universe.Sets,Universe.Source,0.05)
-    #for(i in names(results)){
-      output$bp1 = renderDataTable(result[["bp1"]], escape = FALSE)
-      output$cc1 = renderDataTable(result[["cc1"]], escape = FALSE)
-      output$mf1 = renderDataTable(result[["mf1"]], escape = FALSE)
-      
-    #}
-    # save(list = ls(all.names = TRUE),
-    #       file=sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
+    result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
+      Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
+      output)
     
-  })
+    output$resultsInTabs <- renderUI({
+      #resultTabs = lapply(paste0(c('bp','cc','mf'), rep(1:15,each=3)), tabPanel)
+      if(is.null(universe.sets())){
+        resultTabs = list(tabPanel("Biological Process", dataTableOutput('bp1')),
+          tabPanel("Cellular Component", dataTableOutput('cc1')),
+          tabPanel("Molecular Function", dataTableOutput('mf1')))
+      }else{
+        resultTabs <- list()
+        for(i in universe.sets()){
+          resultTabs <- c(resultTabs,list(tabPanel(paste("BP",i), dataTableOutput(paste0('bp',i))),
+          tabPanel(paste("CC", i), dataTableOutput(paste0('cc',i))),
+          tabPanel(paste("MF", i), dataTableOutput(paste0('mf',i)))))
+        }
+      }#if/else length(resultTabs)==0
+      
+      do.call(tabsetPanel, args = resultTabs, quote = TRUE)
+    })#output$resultsInTabs
   
+    for(i in names(result)){
+      output[[i]] <- renderDataTable(result[[i]], escape = FALSE)
+    }
+    # 
+    # save(list = ls(all.names = TRUE),
+    #       file = sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
+    # 
+  })#observeEvent(input$start.gsea
+  # Add loading, try to include the results 'we we go', add download button
  
 }#server
 
