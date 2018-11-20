@@ -134,6 +134,6 @@ simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, Uni
       }
     }
   }#if/else(is.null(Universe.Sets))
-  
+
   return(result)
 }

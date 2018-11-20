@@ -207,11 +207,7 @@ ui <- fluidPage(
   #http://shiny.rstudio.com/gallery/download-knitr-reports.html
   wellPanel(
     tags$h4("5 - Results"),
-    uiOutput('resultsInTabs')#previous
-    # tabsetPanel(
-    #   id = 'resultsInTabs',
-    #   tabPanel("resultsWarning", 'Please wait, it may take a long time')
-    # )#new
+    uiOutput('resultsInTabs')
   )#wellPanel
       
 )
@@ -704,19 +700,7 @@ server <- function(input, output, session) {
     }else{
       Universe.Gene.Ann=NULL
     }
-    #######################NEW##################################
-    # result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
-    #   Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
-    #   output)
-    # 
-    # for(i in names(result)){
-    #   insertTab(
-    #     inputId = "tabsetPanel", tabPanel(title = toupper(i), dataTableOutput(i)), 
-    #     target = "resultsWarning", position = "before"
-    #   )
-    #   output[[i]] <- renderDataTable(result[[i]], escape = FALSE)
-    # }
-    #===========PREVIOUS===========
+  
     result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
       Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
       output)
@@ -742,19 +726,8 @@ server <- function(input, output, session) {
     lapply(names(result), function(f) {
       output[[f]] <- renderDataTable(result[[f]],escape = FALSE)
     })
+  })#obserEvent
 
-    # for(i in names(result)){
-    #   cat(paste('\n', i,'\n'))
-    #   output[[i]] <- renderDataTable(as.data.frame(result[[i]]), escape = FALSE)
-    # }
-    #===========END Previous==============
-    # 
-    # save(list = ls(all.names = TRUE),
-    #       file = sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
-    # 
-  })#observeEvent(input$start.gsea
-  # Add loading, try to include the results 'we we go', add download button
- 
 }#server
 
 shinyApp(ui = ui, server = server)
