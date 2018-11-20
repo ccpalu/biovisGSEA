@@ -38,25 +38,12 @@ doGO <- function(name, gnId, uni, db, pvalue,
     #save(hgOver,file = paste(name, i, "hgOver.RData", sep = "."))
     # htmlReport(hgOver, file = paste(name, i, "hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
     return(summary(hgOver,"htmlLinks" = TRUE))
-    # testDirection(params) <- 'under'
-    # hgUnder <- hyperGTest(params)
-    # 
-    # htmlReport(hgUnder, file = paste(name, i, "hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
   }
-  # params <- new("KEGGHyperGParams", geneIds = gnId,
-  #   annotation = db, universeGeneIds = uni,
-  #   pvalueCutoff = pvalue, testDirection = "over")
-  # hgOver <- hyperGTest(params)
-  # htmlReport(hgOver, file = paste(name, "KEGG.hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
-  # 
-  # testDirection(params) <- 'under'
-  # hgUnder <- hyperGTest(params)
-  # 
-  # htmlReport(hgUnder, file = paste(name, "KEGG.hgUnder.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
   
 }
 
-simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, Universe.Gene.Ann = NULL, pvalue = 0.025, output = NULL){
+simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, Universe.Gene.Ann = NULL, pvalue = 0.025,
+                              updateProgress = NULL, output = NULL){
   library(GOstats)
   #library(GSEABase)
   library(Category)
@@ -98,35 +85,37 @@ simplicity_gostats <- function(Gene.Ann, SP, Universe.Sets, Universe.Source, Uni
   }
   result <- list()
   
-  # if(is.null(Universe.Sets)){
-  #   for (onto in c('BP','MF','CC')){#!!!
-  #     result = c(result, list(as.data.frame(doGO(name = 'Simplicity.GSEA.singleSet',
-  #       gnId = Gene.Ann$ENTREZID, onto = onto,
-  #       uni =  universe, db = SP$DB, pvalue = pvalue))))
-  #     names(result)[length(result)] <- paste0(tolower(onto),1)
-  #     output[[paste0(tolower(onto),1)]] <- renderDataTable(result[[length(result)]], escape = FALSE)
-  #   }
-  # }else{#
-  #   for(i in Universe.Sets){
-  #     for(onto in c('BP','MF','CC')){
-  #       result <- c(result, list(as.data.frame(doGO(name = paste('Simplicity.GSEA.set',i, sep = "."),
-  #         gnId = Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)],
-  #         uni =  universe, db = SP$DB, pvalue = pvalue, onto = onto))))
-  #       names(result)[length(result)] <- paste0(tolower(onto),i)
-  #       output[[paste0(tolower(onto),i)]] <- renderDataTable(result[[length(result)]], escape = FALSE)
-  #     }
-  #   }
-  # }#if/else(is.null(Universe.Sets))
   if(is.null(Universe.Sets)){
-    for (onto in c('BP','MF','CC')){#!!!
+    for (onto in c('BP','MF','CC')){
+      if (is.function(updateProgress)) {
+        text = switch (onto,
+          'BP' = 'Step 1 of 3: GO Biological Processes',
+          'MF' = 'Step 2 of 3: GO Molecular Functions',
+          'CC' = 'Step 3 of 3: GO Cellular Components'
+        )
+        updateProgress(detail = text)
+      }#if (is.function(updateProgress)) 
+      
       result = c(result, list(as.data.frame(doGO(name = 'Simplicity.GSEA.singleSet',
                             gnId = Gene.Ann$ENTREZID, onto = onto,
                             uni =  universe, db = SP$DB, pvalue = pvalue))))
       names(result)[length(result)] <- paste0(tolower(onto),1)
       }
   }else{#
+    steps <- length(Universe.Sets)*3
+    countSteps <- 1
     for(i in Universe.Sets){
       for(onto in c('BP','MF','CC')){
+        if (is.function(updateProgress)) {
+          text = switch (onto,
+            'BP' = paste('Step', countSteps, 'of', steps,': GO Biological Processes for gene set', i),
+            'MF' = paste('Step', countSteps, 'of', steps,': GO Molecular Functions for gene set', i),
+            'CC' = paste('Step', countSteps, 'of', steps,': GO Cellular Components for gene set', i)
+          )
+          updateProgress(value = countSteps / steps, detail = text)
+          countSteps <- countSteps + 1
+        }#if (is.function(updateProgress)) 
+        
         result <- c(result, list(as.data.frame(doGO(name = paste('Simplicity.GSEA.set',i, sep = "."),
                                 gnId = Gene.Ann$ENTREZID[which(Gene.Ann$Set == i)],
                                 uni =  universe, db = SP$DB, pvalue = pvalue, onto = onto))))

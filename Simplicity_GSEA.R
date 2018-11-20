@@ -700,13 +700,34 @@ server <- function(input, output, session) {
     }else{
       Universe.Gene.Ann=NULL
     }
-  
+    
+    ####### Progress Bar #########
+    # Extracted from https://shiny.rstudio.com/articles/progress.html
+    
+    # Create a Progress object
+    progress <- shiny::Progress$new()
+    progress$set(message = "Computing hypergeometric tests", value = 0)
+    # Close the progress when this reactive exits (even if there's an error)
+    on.exit(progress$close())
+    
+    # Create a callback function to update progress.
+    # Each time this is called:
+    # - If `value` is NULL, it will move the progress bar 1/3 of the remaining
+    #   distance. If non-NULL, it will set the progress to that value.
+    # - It also accepts optional detail text.
+    updateProgress <- function(value = NULL, detail = NULL) {
+      if (is.null(value)) {
+        value <- progress$getValue()
+        value <- value + (progress$getMax() - value) / 3
+      }
+      progress$set(value = value, detail = detail)
+    }
+    
+    ##############################
     result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
-      Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
-      output)
+      Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05, updateProgress)
 
     output$resultsInTabs <- renderUI({
-      #resultTabs = lapply(paste0(c('bp','cc','mf'), rep(1:15,each=3)), tabPanel)
       if(is.null(universe.sets())){
         resultTabs = list(tabPanel("Biological Process", dataTableOutput('bp1')),
           tabPanel("Cellular Component", dataTableOutput('cc1')),
