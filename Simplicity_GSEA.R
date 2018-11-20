@@ -17,6 +17,7 @@ options(repos = BiocInstaller::biocinstallRepos())
 
 library(shiny)
 library(AnnotationDbi)
+#library(DT)
 
 #I have to call the libraries so all of them are installed in the ShinyApp
 #library(org.Mmu.eg.db);library(org.Cf.eg); library(org.Ag.eg); library(org.Xl.eg);
@@ -206,8 +207,11 @@ ui <- fluidPage(
   #http://shiny.rstudio.com/gallery/download-knitr-reports.html
   wellPanel(
     tags$h4("5 - Results"),
-    uiOutput('resultsInTabs')
-    
+    uiOutput('resultsInTabs')#previous
+    # tabsetPanel(
+    #   id = 'resultsInTabs',
+    #   tabPanel("resultsWarning", 'Please wait, it may take a long time')
+    # )#new
   )#wellPanel
       
 )
@@ -700,11 +704,23 @@ server <- function(input, output, session) {
     }else{
       Universe.Gene.Ann=NULL
     }
-    
+    #######################NEW##################################
+    # result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
+    #   Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
+    #   output)
+    # 
+    # for(i in names(result)){
+    #   insertTab(
+    #     inputId = "tabsetPanel", tabPanel(title = toupper(i), dataTableOutput(i)), 
+    #     target = "resultsWarning", position = "before"
+    #   )
+    #   output[[i]] <- renderDataTable(result[[i]], escape = FALSE)
+    # }
+    #===========PREVIOUS===========
     result <- simplicity_gostats(Gene.Ann = Gene.Ann, SP = SP, Universe.Sets = Universe.Sets,
       Universe.Source = Universe.Source, Universe.Gene.Ann =  Universe.Gene.Ann, pvalue = 0.05,
       output)
-    
+
     output$resultsInTabs <- renderUI({
       #resultTabs = lapply(paste0(c('bp','cc','mf'), rep(1:15,each=3)), tabPanel)
       if(is.null(universe.sets())){
@@ -715,17 +731,23 @@ server <- function(input, output, session) {
         resultTabs <- list()
         for(i in universe.sets()){
           resultTabs <- c(resultTabs,list(tabPanel(paste("BP",i), dataTableOutput(paste0('bp',i))),
-          tabPanel(paste("CC", i), dataTableOutput(paste0('cc',i))),
-          tabPanel(paste("MF", i), dataTableOutput(paste0('mf',i)))))
+                          tabPanel(paste("CC", i), dataTableOutput(paste0('cc',i))),
+                          tabPanel(paste("MF", i), dataTableOutput(paste0('mf',i)))))
         }
       }#if/else length(resultTabs)==0
-      
+
       do.call(tabsetPanel, args = resultTabs, quote = TRUE)
     })#output$resultsInTabs
-  
-    for(i in names(result)){
-      output[[i]] <- renderDataTable(result[[i]], escape = FALSE)
-    }
+    
+    lapply(names(result), function(f) {
+      output[[f]] <- renderDataTable(result[[f]],escape = FALSE)
+    })
+
+    # for(i in names(result)){
+    #   cat(paste('\n', i,'\n'))
+    #   output[[i]] <- renderDataTable(as.data.frame(result[[i]]), escape = FALSE)
+    # }
+    #===========END Previous==============
     # 
     # save(list = ls(all.names = TRUE),
     #       file = sprintf("%s_%s.RData","GSEA", as.integer(Sys.time())))
