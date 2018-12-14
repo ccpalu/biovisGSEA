@@ -30,6 +30,12 @@ install.packages("AnnotationForge")
 install.packages("interactiveDisplayBase")
 
 
+install.packages("IRanges")
+install.packages("Biobase")
+install.packages("AnnotationDbi")
+install.packages("AnnotationForge")
+
+
 ###################################################################################################
 # OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 14609 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 18619 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 20519 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 22152 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: NA . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 54215 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 668421 . You may consider choosing a different source.,OK. We found annotation for 2173 genes and there are 188 not recognised. The gene 'universe' contains only 2 out of the 9 genes identified on step 2. This means that the following gnes will not be used in the GSEA: 72719 . You may consider choosing a different source.
 
