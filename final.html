@@ -7,7 +7,7 @@
 		<script src="https://d3js.org/d3.v3.min.js"></script>
 		<!--<script type="text/javascript" src="d3.v3.js"></script> -->
 		<style type="text/css">
-        .link {
+				.link {
 						stroke: #ccc;
 				}
 				.link.selected{
@@ -70,7 +70,7 @@
 		
 
 		<script type="text/javascript">
-		    //Loading json file
+				//Loading json file
 				// Error: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https
 				/*d3.json("graph.json", function(error, json) {
 				  if (error) throw error;
@@ -78,33 +78,33 @@
 				  root = json;
 				  update();
 				});*/
-    		var maxlogFC = 5;//#AQUI 
-    		var pValue = 0.1;
-    		 
-    		/* logFC Legend 
-    		adpted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d*/
-    		var legendFullHeight = 60;
-    		var legendFullWidth = 310;
-    		// Margins
-    		var legendMargin = { top: 5, bottom: 25, left: 5, right: 5 };
-    		var legendWidth = legendFullWidth - legendMargin.left - legendMargin.right;
-    		var legendHeight = legendFullHeight - legendMargin.top - legendMargin.bottom;
+				var maxlogFC = 5;//#AQUI 
+				var pValue = 0.1;
+				 
+				/* logFC Legend 
+				adpted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d*/
+				var legendFullHeight = 60;
+				var legendFullWidth = 310;
+				// Margins
+				var legendMargin = { top: 5, bottom: 25, left: 5, right: 5 };
+				var legendWidth = legendFullWidth - legendMargin.left - legendMargin.right;
+				var legendHeight = legendFullHeight - legendMargin.top - legendMargin.bottom;
 
-        // color range used for  logFC
-        var scale = ["#0000BF", "#0000CF", "#0000DF", "#0000EF", "#0000FF", "#0020FF", "#0040FF",      								"#0060FF", "#0080FF", "#009FFF","#00BFFF", "#00DFFF", "#00FFFF", "#10FFEF",
-            "#20FFDF", "#30FFCF", "#40FFBF", "#50FFAF", "#60FF9F", "#70FF8F","#80FF80",
-      			"#8FFF70", "#9FFF60", "#AFFF50", "#BFFF40", "#CFFF30", "#DFFF20", "#EFFF10",
-      			"#FFFF00", "#FFDF00","#FFBF00", "#FF9F00", "#FF8000", "#FF6000", "#FF4000",
-      			"#FF2000", "#FF0000", "#EF0000", "#DF0000", "#CF0000", "#BF0000"];
+				// color range used for  logFC
+				var scale = ["#0000BF", "#0000CF", "#0000DF", "#0000EF", "#0000FF", "#0020FF", "#0040FF",		  								"#0060FF", "#0080FF", "#009FFF","#00BFFF", "#00DFFF", "#00FFFF", "#10FFEF",
+						"#20FFDF", "#30FFCF", "#40FFBF", "#50FFAF", "#60FF9F", "#70FF8F","#80FF80",
+		  			"#8FFF70", "#9FFF60", "#AFFF50", "#BFFF40", "#CFFF30", "#DFFF20", "#EFFF10",
+		  			"#FFFF00", "#FFDF00","#FFBF00", "#FF9F00", "#FF8000", "#FF6000", "#FF4000",
+		  			"#FF2000", "#FF0000", "#EF0000", "#DF0000", "#CF0000", "#BF0000"];
    
-    		var legendSvg = d3.select("#legend-svg")
+				var legendSvg = d3.select("#legend-svg")
 					  .attr("width", legendFullWidth)
 					  .attr("height", legendFullHeight)
 					  .append("g")
 					  .attr("transform", "translate(" + legendMargin.left + "," +
 					  legendMargin.top + ")");
 										  
-        var gradient = legendSvg.append("defs")
+				var gradient = legendSvg.append("defs")
 						.append("linearGradient")
 						.attr("id", "gradient")
 						.attr("x1", "0%") // bottom
@@ -113,7 +113,7 @@
 						.attr("y2", "0%")
 						.attr("spreadMethod", "pad");
 						
-        var pct = linspace(0, 100, scale.length).map(function(d) {
+				var pct = linspace(0, 100, scale.length).map(function(d) {
 						return Math.round(d) + "%";
 				});
 
@@ -184,13 +184,13 @@
 				   .append("text");
 		  
 		   var textAttributes = text
-            .attr("x", function (d) { return d.x_axis; })
-            .attr("y", function (d) { return d.y_axis; })
+						.attr("x", function (d) { return d.x_axis; })
+						.attr("y", function (d) { return d.y_axis; })
 						.attr("style", function (d) { return d.style; })
 						.text(function (d) { return d.text; });
 														  
 		   var circles = legendSvg.selectAll("circle")
-            .data(jsonCircles)
+						.data(jsonCircles)
 						.enter()
 						.append("circle");
 										  
@@ -208,18 +208,18 @@
 		  
 		  var graph = {"nodes":[{"name":"AGBL1","longname":"ATP/GTP binding protein like 1","pValue":0.0006,"color":"#0000EF","type":"gene","ENSEMBL":"ENSG00000273540","ENTREZID":"123624","logFC":-5.0904,"id":0},{"name":"BAZ2B","longname":"bromodomain adjacent to zinc finger domain 2B","pValue":0.0027,"color":"#00EAFF","type":"gene","ENSEMBL":"ENSG00000226266","ENTREZID":"29994","logFC":-2.5781,"id":1},{"name":"C14orf132","longname":"chromosome 14 open reading frame 132","pValue":0.0326,"color":"#00FFFF","type":"gene","ENSEMBL":"ENSG00000227051","ENTREZID":"56967","logFC":-2.5732,"id":2},{"name":"C22orf24","longname":"chromosome 22 open reading frame 24","pValue":0.0035,"color":"#BFFF40","type":"gene","ENSEMBL":"ENSG00000128254","ENTREZID":"25775","logFC":1.2913,"id":3},{"name":"C3orf35","longname":"chromosome 3 open reading frame 35","pValue":0.0072,"color":"#00BAFF","type":"gene","ENSEMBL":"ENSG00000198590","ENTREZID":"339883","logFC":-3.3347,"id":4},{"name":"C5orf60","longname":"chromosome 5 open reading frame 60","pValue":0.0397,"color":"#00E2FF","type":"gene","ENSEMBL":"ENSG00000204661","ENTREZID":"285679","logFC":-2.8591,"id":5},{"name":"C5orf64","longname":"chromosome 5 open reading frame 64","pValue":0.0001,"color":"#0000BF","type":"gene","ENSEMBL":"ENSG00000178722","ENTREZID":"285668","logFC":-6.5306,"id":6},{"name":"C8orf49","longname":"chromosome 8 open reading frame 49","pValue":0.0019,"color":"#000AFF","type":"gene","ENSEMBL":"ENSG00000255394","ENTREZID":"606553","logFC":-5.1195,"id":7},{"name":"CELF2-AS1","longname":"CELF2 antisense RNA 1","pValue":0.0045,"color":"#0058FF","type":"gene","ENSEMBL":"ENSG00000181800","ENTREZID":"414196","logFC":-4.3013,"id":8},{"name":"DSCR9","longname":"Down syndrome critical region 9 (non-protein coding)","pValue":0.0172,"color":"#009FFF","type":"gene","ENSEMBL":"ENSG00000230366","ENTREZID":"257203","logFC":-3.2734,"id":9},{"name":"DSE","longname":"dermatan sulfate epimerase","pValue":0.0036,"color":"#0035FF","type":"gene","ENSEMBL":"ENSG00000237021","ENTREZID":"29940","logFC":-4.2715,"id":10},{"name":"FAM50B","longname":"family with sequence similarity 50 member B","pValue":0.0248,"color":"#0093FF","type":"gene","ENSEMBL":"ENSG00000238158","ENTREZID":"26240","logFC":-3.6751,"id":11},{"name":"FAM87A","longname":"family with sequence similarity 87 member A","pValue":0.039,"color":"#00D8FF","type":"gene","ENSEMBL":"ENSG00000182366","ENTREZID":"157693","logFC":-3.0427,"id":12},{"name":"GABARAPL3","longname":"GABA type A receptor associated protein like 3 pseudogene","pValue":0.0383,"color":"#00B5FF","type":"gene","ENSEMBL":"ENSG00000279980","ENTREZID":"23766","logFC":-3.0578,"id":13},{"name":"KIF25-AS1","longname":"KIF25 antisense RNA 1","pValue":0.0211,"color":"#00CAFF","type":"gene","ENSEMBL":"ENSG00000229921","ENTREZID":"100505879","logFC":-2.8865,"id":14},{"name":"LINC00052","longname":"long intergenic non-protein coding RNA 52","pValue":0.0047,"color":"#0000EB","type":"gene","ENSEMBL":"ENSG00000259527","ENTREZID":"145978","logFC":-5.5934,"id":15},{"name":"LINC00305","longname":"long intergenic non-protein coding RNA 305","pValue":0.002,"color":"#0058FF","type":"gene","ENSEMBL":"ENSG00000179676","ENTREZID":"221241","logFC":-4.3111,"id":16},{"name":"LINC00477","longname":"long intergenic non-protein coding RNA 477","pValue":0.0026,"color":"#0031FF","type":"gene","ENSEMBL":"ENSG00000197503","ENTREZID":"144360","logFC":-4.7432,"id":17},{"name":"LINC00862","longname":"long intergenic non-protein coding RNA 862","pValue":0.0021,"color":"#0031FF","type":"gene","ENSEMBL":"ENSG00000203721","ENTREZID":"554279","logFC":-4.683,"id":18},{"name":"LINC00998","longname":"long intergenic non-protein coding RNA 998","pValue":0.0001,"color":"#CEFF31","type":"gene","ENSEMBL":"ENSG00000214194","ENTREZID":"401397","logFC":1.6106,"id":19},{"name":"LINC01547","longname":"long intergenic non-protein coding RNA 1547","pValue":0.0381,"color":"#00EBFF","type":"gene","ENSEMBL":"ENSG00000183250","ENTREZID":"84536","logFC":-2.8283,"id":20},{"name":"LINC01558","longname":"long intergenic non-protein coding RNA 1558","pValue":0.0061,"color":"#00AAFF","type":"gene","ENSEMBL":"ENSG00000146521","ENTREZID":"26238","logFC":-3.2218,"id":21},{"name":"LINC01587","longname":"long intergenic non-protein coding RNA 1587","pValue":0.0016,"color":"#0000F4","type":"gene","ENSEMBL":"ENSG00000082929","ENTREZID":"10141","logFC":-5.0326,"id":22},{"name":"LMF1","longname":"lipase maturation factor 1","pValue":0.0002,"color":"#0000BF","type":"gene","ENSEMBL":"ENSG00000260807","ENTREZID":"64788","logFC":-6.0321,"id":23},{"name":"MYCNOS","longname":"MYCN opposite strand","pValue":0.0062,"color":"#E4FF1B","type":"gene","ENSEMBL":"ENSG00000233718","ENTREZID":"10408","logFC":1.9208,"id":24},{"name":"SERHL","longname":"serine hydrolase-like (pseudogene)","pValue":0.0063,"color":"#00BFFF","type":"gene","ENSEMBL":"ENSG00000172250","ENTREZID":"94009","logFC":-2.9755,"id":25},{"name":"SPATA13","longname":"spermatogenesis associated 13","pValue":0.0027,"color":"#0000FF","type":"gene","ENSEMBL":"ENSG00000228741","ENTREZID":"221178","logFC":-4.8233,"id":26},{"name":"TAB2","longname":"TGF-beta activated kinase 1/MAP3K7 binding protein 2","pValue":0.0022,"color":"#0020FF","type":"gene","ENSEMBL":"ENSG00000228408","ENTREZID":"23118","logFC":-4.4579,"id":27},{"name":"TDRG1","longname":"testis development related 1 (non-protein coding)","pValue":0.0114,"color":"#0095FF","type":"gene","ENSEMBL":"ENSG00000204091","ENTREZID":"732253","logFC":-3.3981,"id":28},{"name":"TP53TG1","longname":"TP53 target 1 (non-protein coding)","pValue":0.0104,"color":"#BFFF40","type":"gene","ENSEMBL":"ENSG00000182165","ENTREZID":"11257","logFC":1.1724,"id":29},{"name":"WT1-AS","longname":"WT1 antisense RNA","pValue":0.001,"color":"#0040FF","type":"gene","ENSEMBL":"ENSG00000183242","ENTREZID":"51352","logFC":-4.1902,"id":30},{"name":"ZNF883","longname":"zinc finger protein 883","pValue":0.0103,"color":"#00CAFF","type":"gene","ENSEMBL":"ENSG00000228623","ENTREZID":"169834","logFC":-2.8621,"id":31},{"name":"GO:0006464","longname":"cellular protein modification process","pValue":0.0875,"color":"#FFFFFF","type":"GOBPID","id":32},{"name":"GO:0006950","longname":"response to stress","pValue":0.242,"color":"#FFFFFF","type":"GOBPID","id":33},{"name":"GO:0008150","longname":"biological_process","pValue":1,"color":"#FFFFFF","type":"GOBPID","id":34},{"name":"GO:0008152","longname":"metabolic process","pValue":0.3574,"color":"#FFFFFF","type":"GOBPID","id":35},{"name":"GO:0009987","longname":"cellular process","pValue":0.5398,"color":"#FFFFFF","type":"GOBPID","id":36},{"name":"GO:0019538","longname":"protein metabolic process","pValue":0.242,"color":"#FFFFFF","type":"GOBPID","id":37},{"name":"GO:0033554","longname":"cellular response to stress","pValue":0.0875,"color":"#FFFFFF","type":"GOBPID","id":38},{"name":"GO:0036211","longname":"protein modification process","pValue":0.0875,"color":"#FFFFFF","type":"GOBPID","id":39},{"name":"GO:0043170","longname":"macromolecule metabolic process","pValue":0.1472,"color":"#FFFFFF","type":"GOBPID","id":40},{"name":"GO:0043412","longname":"macromolecule modification","pValue":0.0875,"color":"#FFFFFF","type":"GOBPID","id":41},{"name":"GO:0044237","longname":"cellular metabolic process","pValue":0.1485,"color":"#FFFFFF","type":"GOBPID","id":42},{"name":"GO:0044238","longname":"primary metabolic process","pValue":0.2543,"color":"#FFFFFF","type":"GOBPID","id":43},{"name":"GO:0044260","longname":"cellular macromolecule metabolic process","pValue":0.0716,"color":"#FFFFFF","type":"GOBPID","id":44},{"name":"GO:0044267","longname":"cellular protein metabolic process","pValue":0.0875,"color":"#FFFFFF","type":"GOBPID","id":45},{"name":"GO:0050896","longname":"response to stimulus","pValue":0.7908,"color":"#FFFFFF","type":"GOBPID","id":46},{"name":"GO:0051716","longname":"cellular response to stimulus","pValue":0.6848,"color":"#FFFFFF","type":"GOBPID","id":47},{"name":"GO:0071704","longname":"organic substance metabolic process","pValue":0.2505,"color":"#FFFFFF","type":"GOBPID","id":48},{"name":"GO:0005575","longname":"cellular_component","pValue":1,"color":"#FFFFFF","type":"GOCCID","id":49},{"name":"GO:0005622","longname":"intracellular","pValue":0.0399,"color":"#FFFFFF","type":"GOCCID","id":50},{"name":"GO:0005623","longname":"cell","pValue":0.0727,"color":"#FFFFFF","type":"GOCCID","id":51},{"name":"GO:0005737","longname":"cytoplasm","pValue":0.0249,"color":"#FFFFFF","type":"GOCCID","id":52},{"name":"GO:0043226","longname":"organelle","pValue":0.0622,"color":"#FFFFFF","type":"GOCCID","id":53},{"name":"GO:0043227","longname":"membrane-bounded organelle","pValue":0.0622,"color":"#FFFFFF","type":"GOCCID","id":54},{"name":"GO:0043229","longname":"intracellular organelle","pValue":0.0622,"color":"#FFFFFF","type":"GOCCID","id":55},{"name":"GO:0043231","longname":"intracellular membrane-bounded organelle","pValue":0.0622,"color":"#FFFFFF","type":"GOCCID","id":56},{"name":"GO:0044424","longname":"intracellular part","pValue":0.0399,"color":"#FFFFFF","type":"GOCCID","id":57},{"name":"GO:0044444","longname":"cytoplasmic part","pValue":0.0659,"color":"#FFFFFF","type":"GOCCID","id":58},{"name":"GO:0044464","longname":"cell part","pValue":0.0727,"color":"#FFFFFF","type":"GOCCID","id":59}],"links":[{"source":"44","target":"45","value":1},{"source":"39","target":"32","value":1},{"source":"41","target":"39","value":1},{"source":"45","target":"32","value":1},{"source":"33","target":"38","value":1},{"source":"37","target":"39","value":1},{"source":"37","target":"45","value":1},{"source":"40","target":"37","value":1},{"source":"40","target":"41","value":1},{"source":"40","target":"44","value":1},{"source":"42","target":"44","value":1},{"source":"43","target":"37","value":1},{"source":"46","target":"33","value":1},{"source":"46","target":"47","value":1},{"source":"47","target":"38","value":1},{"source":"48","target":"40","value":1},{"source":"34","target":"35","value":1},{"source":"34","target":"36","value":1},{"source":"34","target":"46","value":1},{"source":"35","target":"42","value":1},{"source":"35","target":"43","value":1},{"source":"35","target":"48","value":1},{"source":"36","target":"42","value":1},{"source":"36","target":"47","value":1},{"source":"22","target":"34","value":1},{"source":"21","target":"34","value":1},{"source":"25","target":"34","value":1},{"source":"29","target":"38","value":1},{"source":"29","target":"33","value":1},{"source":"29","target":"46","value":1},{"source":"29","target":"47","value":1},{"source":"29","target":"34","value":1},{"source":"29","target":"36","value":1},{"source":"30","target":"34","value":1},{"source":"28","target":"34","value":1},{"source":"1","target":"44","value":1},{"source":"1","target":"40","value":1},{"source":"1","target":"42","value":1},{"source":"1","target":"43","value":1},{"source":"1","target":"48","value":1},{"source":"1","target":"34","value":1},{"source":"1","target":"35","value":1},{"source":"1","target":"36","value":1},{"source":"27","target":"44","value":1},{"source":"27","target":"32","value":1},{"source":"27","target":"38","value":1},{"source":"27","target":"39","value":1},{"source":"27","target":"41","value":1},{"source":"27","target":"45","value":1},{"source":"27","target":"33","value":1},{"source":"27","target":"37","value":1},{"source":"27","target":"40","value":1},{"source":"27","target":"42","value":1},{"source":"27","target":"43","value":1},{"source":"27","target":"46","value":1},{"source":"27","target":"47","value":1},{"source":"27","target":"48","value":1},{"source":"27","target":"34","value":1},{"source":"27","target":"35","value":1},{"source":"27","target":"36","value":1},{"source":"31","target":"44","value":1},{"source":"31","target":"40","value":1},{"source":"31","target":"42","value":1},{"source":"31","target":"43","value":1},{"source":"31","target":"48","value":1},{"source":"31","target":"34","value":1},{"source":"31","target":"35","value":1},{"source":"31","target":"36","value":1},{"source":"26","target":"46","value":1},{"source":"26","target":"47","value":1},{"source":"26","target":"34","value":1},{"source":"26","target":"36","value":1},{"source":"14","target":"34","value":1},{"source":"9","target":"34","value":1},{"source":"24","target":"42","value":1},{"source":"24","target":"34","value":1},{"source":"24","target":"35","value":1},{"source":"24","target":"36","value":1},{"source":"10","target":"44","value":1},{"source":"10","target":"40","value":1},{"source":"10","target":"42","value":1},{"source":"10","target":"48","value":1},{"source":"10","target":"34","value":1},{"source":"10","target":"35","value":1},{"source":"10","target":"36","value":1},{"source":"23","target":"44","value":1},{"source":"23","target":"32","value":1},{"source":"23","target":"39","value":1},{"source":"23","target":"41","value":1},{"source":"23","target":"45","value":1},{"source":"23","target":"37","value":1},{"source":"23","target":"40","value":1},{"source":"23","target":"42","value":1},{"source":"23","target":"43","value":1},{"source":"23","target":"48","value":1},{"source":"23","target":"34","value":1},{"source":"23","target":"35","value":1},{"source":"23","target":"36","value":1},{"source":"0","target":"44","value":1},{"source":"0","target":"32","value":1},{"source":"0","target":"39","value":1},{"source":"0","target":"41","value":1},{"source":"0","target":"45","value":1},{"source":"0","target":"37","value":1},{"source":"0","target":"40","value":1},{"source":"0","target":"42","value":1},{"source":"0","target":"43","value":1},{"source":"0","target":"48","value":1},{"source":"0","target":"34","value":1},{"source":"0","target":"35","value":1},{"source":"0","target":"36","value":1},{"source":"13","target":"38","value":1},{"source":"13","target":"33","value":1},{"source":"13","target":"46","value":1},{"source":"13","target":"47","value":1},{"source":"13","target":"34","value":1},{"source":"13","target":"36","value":1},{"source":"52","target":"58","value":1},{"source":"50","target":"57","value":1},{"source":"57","target":"52","value":1},{"source":"57","target":"55","value":1},{"source":"57","target":"58","value":1},{"source":"53","target":"54","value":1},{"source":"53","target":"55","value":1},{"source":"54","target":"56","value":1},{"source":"55","target":"56","value":1},{"source":"51","target":"59","value":1},{"source":"59","target":"50","value":1},{"source":"59","target":"57","value":1},{"source":"49","target":"51","value":1},{"source":"49","target":"53","value":1},{"source":"49","target":"59","value":1},{"source":"3","target":"49","value":1},{"source":"21","target":"49","value":1},{"source":"25","target":"52","value":1},{"source":"25","target":"50","value":1},{"source":"25","target":"57","value":1},{"source":"25","target":"53","value":1},{"source":"25","target":"54","value":1},{"source":"25","target":"55","value":1},{"source":"25","target":"56","value":1},{"source":"25","target":"58","value":1},{"source":"25","target":"51","value":1},{"source":"25","target":"59","value":1},{"source":"25","target":"49","value":1},{"source":"6","target":"49","value":1},{"source":"16","target":"49","value":1},{"source":"8","target":"49","value":1},{"source":"12","target":"49","value":1},{"source":"30","target":"49","value":1},{"source":"20","target":"52","value":1},{"source":"20","target":"50","value":1},{"source":"20","target":"57","value":1},{"source":"20","target":"53","value":1},{"source":"20","target":"54","value":1},{"source":"20","target":"55","value":1},{"source":"20","target":"56","value":1},{"source":"20","target":"58","value":1},{"source":"20","target":"51","value":1},{"source":"20","target":"59","value":1},{"source":"20","target":"49","value":1},{"source":"17","target":"49","value":1},{"source":"4","target":"49","value":1},{"source":"18","target":"49","value":1},{"source":"28","target":"52","value":1},{"source":"28","target":"50","value":1},{"source":"28","target":"57","value":1},{"source":"28","target":"51","value":1},{"source":"28","target":"59","value":1},{"source":"28","target":"49","value":1},{"source":"5","target":"49","value":1},{"source":"19","target":"49","value":1},{"source":"1","target":"50","value":1},{"source":"1","target":"57","value":1},{"source":"1","target":"53","value":1},{"source":"1","target":"54","value":1},{"source":"1","target":"55","value":1},{"source":"1","target":"56","value":1},{"source":"1","target":"51","value":1},{"source":"1","target":"59","value":1},{"source":"1","target":"49","value":1},{"source":"2","target":"49","value":1},{"source":"27","target":"52","value":1},{"source":"27","target":"50","value":1},{"source":"27","target":"57","value":1},{"source":"27","target":"53","value":1},{"source":"27","target":"54","value":1},{"source":"27","target":"55","value":1},{"source":"27","target":"56","value":1},{"source":"27","target":"58","value":1},{"source":"27","target":"51","value":1},{"source":"27","target":"59","value":1},{"source":"27","target":"49","value":1},{"source":"31","target":"50","value":1},{"source":"31","target":"57","value":1},{"source":"31","target":"53","value":1},{"source":"31","target":"54","value":1},{"source":"31","target":"55","value":1},{"source":"31","target":"56","value":1},{"source":"31","target":"51","value":1},{"source":"31","target":"59","value":1},{"source":"31","target":"49","value":1},{"source":"26","target":"52","value":1},{"source":"26","target":"50","value":1},{"source":"26","target":"57","value":1},{"source":"26","target":"53","value":1},{"source":"26","target":"54","value":1},{"source":"26","target":"55","value":1},{"source":"26","target":"56","value":1},{"source":"26","target":"51","value":1},{"source":"26","target":"59","value":1},{"source":"26","target":"49","value":1},{"source":"14","target":"49","value":1},{"source":"9","target":"49","value":1},{"source":"24","target":"52","value":1},{"source":"24","target":"50","value":1},{"source":"24","target":"57","value":1},{"source":"24","target":"53","value":1},{"source":"24","target":"54","value":1},{"source":"24","target":"55","value":1},{"source":"24","target":"56","value":1},{"source":"24","target":"51","value":1},{"source":"24","target":"59","value":1},{"source":"24","target":"49","value":1},{"source":"10","target":"52","value":1},{"source":"10","target":"50","value":1},{"source":"10","target":"57","value":1},{"source":"10","target":"53","value":1},{"source":"10","target":"54","value":1},{"source":"10","target":"55","value":1},{"source":"10","target":"56","value":1},{"source":"10","target":"58","value":1},{"source":"10","target":"51","value":1},{"source":"10","target":"59","value":1},{"source":"10","target":"49","value":1},{"source":"11","target":"50","value":1},{"source":"11","target":"57","value":1},{"source":"11","target":"53","value":1},{"source":"11","target":"54","value":1},{"source":"11","target":"55","value":1},{"source":"11","target":"56","value":1},{"source":"11","target":"51","value":1},{"source":"11","target":"59","value":1},{"source":"11","target":"49","value":1},{"source":"7","target":"49","value":1},{"source":"15","target":"49","value":1},{"source":"23","target":"52","value":1},{"source":"23","target":"50","value":1},{"source":"23","target":"57","value":1},{"source":"23","target":"53","value":1},{"source":"23","target":"54","value":1},{"source":"23","target":"55","value":1},{"source":"23","target":"56","value":1},{"source":"23","target":"58","value":1},{"source":"23","target":"51","value":1},{"source":"23","target":"59","value":1},{"source":"23","target":"49","value":1},{"source":"0","target":"52","value":1},{"source":"0","target":"50","value":1},{"source":"0","target":"57","value":1},{"source":"0","target":"58","value":1},{"source":"0","target":"51","value":1},{"source":"0","target":"59","value":1},{"source":"0","target":"49","value":1},{"source":"13","target":"52","value":1},{"source":"13","target":"50","value":1},{"source":"13","target":"57","value":1},{"source":"13","target":"53","value":1},{"source":"13","target":"54","value":1},{"source":"13","target":"55","value":1},{"source":"13","target":"56","value":1},{"source":"13","target":"58","value":1},{"source":"13","target":"51","value":1},{"source":"13","target":"59","value":1},{"source":"13","target":"49","value":1}]};
 		   
-		    //d3.select("#graphstatic").on("click", function())
-		    d3.select("#graphstatic").on("change", freeze)
-		    
-		    function freeze(){
+				//d3.select("#graphstatic").on("click", function())
+				d3.select("#graphstatic").on("change", freeze)
+				
+				function freeze(){
 						value = d3.select("#graphstatic").property("checked")
 						graph.nodes.forEach(function(el) {
-						    el.fixed = value;
-								el.opened = value;
+								el.fixed = value;
+								//el.opened = value;
 						})
-		    };
+				};
  
-		    graph.links.forEach(function(el) {
+				graph.links.forEach(function(el) {
 						delete el.value;
 						el.source = parseInt(el.source);
 						el.target = parseInt(el.target);
@@ -266,38 +266,35 @@
 				init();
 
 				function init() {
-				//    graph.nodes.forEach(function(el) {
-				//		    el.fixed = true;
-				//        el.opened = true;
 				  
 				//Dísplay nodes on the positions
-    				graph.nodes.forEach(function(el) {
-    						if (el.type === "gene") {
-    								if(countGene === 12){
-    								  countGene = 0;
-    								  countGeneLine ++;
-    								}
-    								
-    								el.x = 50 + (90 * countGene);
-    								el.y = 100 + (40 * countGeneLine);
-    								el.fixed = true;
-    								el.opened = true;
-    								var aux = [];
-    								displayTreeRecursively(el);
-    								countGene++;
-    						} else {
-    								if (el.pValue > pValue) {
-    										countPValueAbove++;
-    										altAbove++;
-    										if (altAbove === 4) altAbove = 0;
-    										el.x = 50 + 30 * countPValueAbove;
-    										el.y = 200 + (40 * countGeneLine) + 50 * altAbove;
-    										el.fixed = true;
-    										el.opened = false;
-    								}
-    						}// if (el.type === "gene")
-    				});//graph.nodes.forEach(function(el)
-    				var force = self.force = d3.layout.force()
+						graph.nodes.forEach(function(el) {
+								if (el.type === "gene") {
+										if(countGene === 12){
+										  countGene = 0;
+										  countGeneLine ++;
+										}
+										
+										el.x = 50 + (90 * countGene);
+										el.y = 100 + (40 * countGeneLine);
+										el.fixed = true;
+										el.opened = true;
+										var aux = [];
+										displayTreeRecursively(el);
+										countGene++;
+								} else {
+										if (el.pValue > pValue) {
+												countPValueAbove++;
+												altAbove++;
+												if (altAbove === 4) altAbove = 0;
+												el.x = 50 + 30 * countPValueAbove;
+												el.y = 200 + (40 * countGeneLine) + 50 * altAbove;
+												el.fixed = true;
+												el.opened = false;
+										}
+								}// if (el.type === "gene")
+						});//graph.nodes.forEach(function(el)
+						var force = self.force = d3.layout.force()
 								.nodes(graph.nodes)
 								.links(graph.links)
 								.gravity(1)
@@ -342,7 +339,7 @@
 								.on("drag", dragmove)
 								.on("dragend", dragend);
 				  
-				    //Creating nodes with the data loaded from json. Ading click actions and tooltip
+						//Creating nodes with the data loaded from json. Ading click actions and tooltip
 						node = svg.selectAll("g.node")
 								.data(graph.nodes)
 								.enter().append("svg:g")
@@ -350,35 +347,35 @@
 								.on("click", click)
 								.call(node_drag)
 								.on("mouseover", function(d) {
-  					d3.selectAll(".link").attr("class", "link");
-  					d3.selectAll(".link")
-    						.filter(function(l) {
-    							return (l.source === d) || (l.target === d);
-    						})
-    						.attr("class", "link selected");
-  
-						div.transition()				
-								.duration(200)		  
-								.style("opacity", .9);
-								
-						var str = "<b>Name:</b> " + d.name +"<br/>"+
-						"<b>Longname:</b>" + d.longname + "<br/>"+
-						"<b>pValue:</b> " + d.pValue + "<br/>"+
-						"<b>Type: </b>"+d.type;  
-						
-  					if(d.type == "gene"){//#AQUI
-  						str += "<br/><b>LogFC: </b>"+d.logFC; 
-  					}
-						div .html(str)  
-								.style("left", (d3.event.pageX) + "px")		 
-								.style("top", (d3.event.pageY - 28) + "px");
-						})								  
-						.on("mouseout", function(d) {		
-    		  			d3.selectAll(".link").attr("class", "link");				
-    						    div.transition()				
-    								    .duration(500)		  
-    										.style("opacity", 0);   
-						});
+				  					d3.selectAll(".link").attr("class", "link");
+				  					d3.selectAll(".link")
+												.filter(function(l) {
+														return (l.source === d) || (l.target === d);
+			  								})
+			  								.attr("class", "link selected");
+
+										div.transition()				
+												.duration(200)		  
+												.style("opacity", .9);
+												
+										var str = "<b>Name:</b> " + d.name +"<br/>"+
+												d.longname + "<br/>"+
+												"<b>pValue:</b> " + d.pValue + "<br/>"+
+												"<b>Type: </b>"+d.type;  
+										
+				  					if(d.type == "gene"){//#AQUI
+				  						str += "<br/><b>LogFC: </b>"+d.logFC; 
+				  					}
+										div .html(str)  
+												.style("left", (d3.event.pageX) + "px")		 
+												.style("top", (d3.event.pageY - 28) + "px");
+								})	//end of .on("mouseover", function(d)							  
+								.on("mouseout", function(d) {		
+						  			d3.selectAll(".link").attr("class", "link");				
+												div.transition()				
+														.duration(500)		  
+														.style("opacity", 0);   
+								});
 
 
 						//Add a circle to the node and define its color
@@ -438,26 +435,26 @@
 						node.append("svg:text")
 								.attr("class", "nodetext")
 								.attr("dx", function(d) {
-        						if(d.type === "gene"){//#AQUI
-        							return -dim +5 
-        						}else{
-        							return 15 
-        						}								
-    						})
-        				.attr("dy", function(d) {
-        						if(d.type === "gene"){
-        							return -(dim/2)-2 
-        						}else{
-        							return 5 
-        						}
-        				})
-        				.style("font-size", function(d) {
-							      if(d.type === "gene"){
-								        return 12
-      							}else{
-      								return 12
-      							}
-      				  })
+										if(d.type === "gene"){//#AQUI
+											return -dim +5 
+										}else{
+											return 15 
+										}								
+								})
+								.attr("dy", function(d) {
+										if(d.type === "gene"){
+											return -(dim/2)-2 
+										}else{
+											return 5 
+										}
+								})
+								.style("font-size", function(d) {
+									  if(d.type === "gene"){
+												return 12
+		  							}else{
+		  								return 12
+		  							}
+		  				  })
 								.text(function(d) {
 										if(d.type === "gene"){
 												return d.name
@@ -470,17 +467,17 @@
 						node.append("svg:text")//#AQUI
 								.attr("class", "nodetext")
 								.attr("dx", function(d) {
-        						if(d.type === "gene"){
-        							  return -dim +5 
-        						}else{
-                        return 15 
-        						}								})
-        				.attr("dy", function(d) {
-        						if(d.type === "gene"){
-        							  return -5 
-        						}else{
-        							  return 18 
-        						}								})
+										if(d.type === "gene"){
+											  return -dim +5 
+										}else{
+												return 15 
+										}								})
+								.attr("dy", function(d) {
+										if(d.type === "gene"){
+											  return -5 
+										}else{
+											  return 18 
+										}								})
 								.style("font-size", "10")
 								.text(function(d) {
 										return d.pValue
@@ -626,29 +623,33 @@
 								.on("click", click)
 								.call(node_drag)
 								.on("mouseover", function(d) {
-            				d3.selectAll(".link").attr("class", "link");
-            				d3.selectAll(".link")
-              					.filter(function(l) {
-              						  return (l.source === d) || (l.target === d);
-              					})
-              					.attr("class", "link selected");
+										d3.selectAll(".link").attr("class", "link");
+										d3.selectAll(".link")
+						  					.filter(function(l) {
+						  						  return (l.source === d) || (l.target === d);
+						  					})
+						  					.attr("class", "link selected");
 						
 										div.transition()				
 												.duration(200)		  
 												.style("opacity", .9);
-										var str = "<b>Name:</b> " + d.name +"<br/><b>Longname:</b>" + d.longname + "<br/><b>pValue:</b> " + d.pValue + "<br/><b>Type: </b>"+d.type;
-										div .html(str)  
+										var str = "<b>Name:</b> " + d.name +"<br/>" 
+										    + d.longname + "<br/><b>pValue:</b> " + d.pValue + "<br/><b>Type: </b>"+d.type;
+										if(d.type == "gene"){//#AQUI
+				  						str += "<br/><b>LogFC: </b>"+d.logFC; 
+				  					}
+				  					div .html(str)  
 												.style("left", (d3.event.pageX) + "px")		 
 												.style("top", (d3.event.pageY - 28) + "px");
 										})//end of .on("mouseover", function(d) 								  
 								.on("mouseout", function(d) {  
-				      	    d3.selectAll(".link").attr("class", "link");				
+						  			d3.selectAll(".link").attr("class", "link");				
 										div.transition()				
 												.duration(500)		  
 												.style("opacity", 0);   
 								});//end of .on("mouseout", function(d)
 
-				    //Add a circle to the node and define its color
+						//Add a circle to the node and define its color
 						nodeEnter.filter(function(d){
 								return d.type !== "gene";})
 								.append("circle")
@@ -666,8 +667,8 @@
 												else return "#00ff36";
 										}		
 								});
-			      
-			      var dim = 32;
+					  
+					  var dim = 32;
 						
 						//Coloring Genes and adding rectangle//#aqui
 						nodeEnter.filter(function(d){
@@ -677,7 +678,7 @@
 								.attr("y", -dim)
 								.attr("width", dim*2.5)
 								.attr("height", dim)
-						    .style("cursor", "pointer")
+								.style("cursor", "pointer")
 								.style("fill", function(d, i) {
 										return d.color;
 								});
@@ -702,26 +703,26 @@
 								});
 						nodeEnter.append("svg:text")
 								.attr("class", "nodetext")
-        				.attr("dx", function(d) {
-        						if(d.type === "gene"){
-        							return -dim +5 
-        						}else{
-        							return 15 
-        						}								
-        				})
-        				.attr("dy", function(d) {
-        						if(d.type === "gene"){
-        							return -(dim/2)-2 
-        						}else{
-        							return 5 
-        						}								})
-        								.style("font-size", function(d) {
-        							if(d.type === "gene"){
-        								return 12
-        							}else{
-        								return 12
-        							}
-        				})
+								.attr("dx", function(d) {
+										if(d.type === "gene"){
+											return -dim +5 
+										}else{
+											return 15 
+										}								
+								})
+								.attr("dy", function(d) {
+										if(d.type === "gene"){
+											return -(dim/2)-2 
+										}else{
+											return 5 
+										}								})
+												.style("font-size", function(d) {
+											if(d.type === "gene"){
+												return 12
+											}else{
+												return 12
+											}
+								})
 								.text(function(d) {
 										if(d.type === "gene"){
 												return d.name
@@ -731,18 +732,18 @@
 								});
 						nodeEnter.append("svg:text")
 								.attr("class", "nodetext")
-        				.attr("dx", function(d) {
-        						if(d.type === "gene"){
-        							return -dim +5 
-        						}else{
-        							return 15 
-        						}								})
-        				.attr("dy", function(d) {
-        						if(d.type === "gene"){
-        							return -5 
-        						}else{
-        							return 18 
-        						}								})
+								.attr("dx", function(d) {
+										if(d.type === "gene"){
+											return -dim +5 
+										}else{
+											return 15 
+										}								})
+								.attr("dy", function(d) {
+										if(d.type === "gene"){
+											return -5 
+										}else{
+											return 18 
+										}								})
 								.style("font-size", "10")
 								.text(function(d) {
 										return d.pValue
@@ -857,53 +858,53 @@
 
 						});
 
-      			//Add links between genes and closed nodes that is visible. 
-      			var linksNodesToGenes = [];
-      			var linksNodesToGenesFound = []
-      			node.forEach(function(n) {
-        				linksNodesToGenes = graph.links.filter(function(l) {
-          					if(n.name == l.target.name && l.target.type == "GOBPID" && l.source.type == "gene" ){
-          					  	return true;
-          					}
-        					  return false;
-        				});
-        				linksNodesToGenes.forEach(function(link1) {
-        					  var found = false;
-        					  link.forEach(function(link2) {
-            						if(link1.source.name == link2.source.name && link1.target.name == link2.target.name){
-            					  		found = true;
-            						}
-        					  });
-          					if(!found){
-          						linksNodesToGenesFound.push(link1);
-          					}
-        				});
-          	});
-      			
-      			//Add just links that have a visible nodes 
-      			for(var x = linksNodesToGenesFound.length-1; x >= 0;x--){
-        				for(t = 0; t < node.length;t++){
-          					if(node[t].name === linksNodesToGenesFound[x].source.name){
-            						link.push(linksNodesToGenesFound[x]);
-            						break;
-          					}
-        				}
-      			}
-      			
+		  			//Add links between genes and closed nodes that is visible. 
+		  			var linksNodesToGenes = [];
+		  			var linksNodesToGenesFound = []
+		  			node.forEach(function(n) {
+								linksNodesToGenes = graph.links.filter(function(l) {
+				  					if(n.name == l.target.name && l.target.type == "GOBPID" && l.source.type == "gene" ){
+				  					  	return true;
+				  					}
+									  return false;
+								});
+								linksNodesToGenes.forEach(function(link1) {
+									  var found = false;
+									  link.forEach(function(link2) {
+												if(link1.source.name == link2.source.name && link1.target.name == link2.target.name){
+											  		found = true;
+												}
+									  });
+				  					if(!found){
+				  						linksNodesToGenesFound.push(link1);
+				  					}
+								});
+				  	});
+		  			
+		  			//Add just links that have a visible nodes 
+		  			for(var x = linksNodesToGenesFound.length-1; x >= 0;x--){
+								for(t = 0; t < node.length;t++){
+				  					if(node[t].name === linksNodesToGenesFound[x].source.name){
+												link.push(linksNodesToGenesFound[x]);
+												break;
+				  					}
+								}
+		  			}
+		  			
 			
 						//Update nodes and links in the d3 lib
 						update(node, link);
-			      d3.selectAll(".link").attr("class", "link");	
+					  d3.selectAll(".link").attr("class", "link");	
 				}//end of function updateNodesLinks(d)
 
 				function closeAndOpenNodesRecursively(node, open) {
 						var linksFromThatNode = [];
 						//Search for the links that target to the node clicked
 						linksFromThatNode = graph.links.filter(function(link) {
-        				if(node.name === link.target.name){
-        					  return true;
-        				}
-        				return false;
+								if(node.name === link.target.name){
+									  return true;
+								}
+								return false;
 						});
 						//Sort the array utilizing it"s pValue
 						linksFromThatNode.sort(function(a, b) {
@@ -993,7 +994,7 @@
 						var aux= parseFloat(document.getElementById("pValue").value);
 						pValue = aux;
 						level = 0,countNodesOnLevel=[];
-				    for (var i = 0; i < graph.nodes.length; i++) countNodesOnLevel[i] = 0;
+						for (var i = 0; i < graph.nodes.length; i++) countNodesOnLevel[i] = 0;
 						node = svg.selectAll("g.node").remove();
 						link = svg.selectAll("line.link").remove();
 
@@ -1013,7 +1014,7 @@
 		
 						out.push(end);
 						return out;
-		    }
+				}
 		</script>
 </body>
 
