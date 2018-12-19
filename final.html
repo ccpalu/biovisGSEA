@@ -168,13 +168,12 @@
   		   ];
 										
 		   var jsonCircles = [
-				   { "x_axis": gap + rad/2, "y_axis": gap*2 + rad, "radius": rad, "color" : "#ffd900" },
-				   { "x_axis": gap + rad/2, "y_axis": gap*2 + rad, "radius": rad, "color" : "#ffd900" },
-				   { "x_axis": (gap + rad)*2, "y_axis": gap*2 + rad, "radius": rad, "color" : "#fffe51" },
-				   { "x_axis": gap + rad/2, "y_axis": gap*3 + rad*2, "radius": rad, "color" : "#c3a6c7" },
-				   { "x_axis": (gap + rad)*2, "y_axis": gap*3 + rad*2, "radius": rad, "color" : "#de5cd7" },
-				   { "x_axis": gap + rad/2, "y_axis": gap*4 + rad*3, "radius": rad, "color" : "#00c429" },
-				   { "x_axis": (gap + rad)*2, "y_axis": gap*4 + rad*3, "radius": rad, "color" : "#00ff36" }
+				   { "x_axis": gap + rad/2, "y_axis": gap*2 + rad, "radius": rad, "color" : "#ffe44d" },
+				   { "x_axis": (gap + rad)*2, "y_axis": gap*2 + rad, "radius": rad, "color" : "#ccae00" },
+				   { "x_axis": gap + rad/2, "y_axis": gap*3 + rad*2, "radius": rad, "color" : "#ceb6d1" },
+				   { "x_axis": (gap + rad)*2, "y_axis": gap*3 + rad*2, "radius": rad, "color" : "#a377a9" },
+				   { "x_axis": gap + rad/2, "y_axis": gap*4 + rad*3, "radius": rad, "color" : "#45ff9a" },
+				   { "x_axis": (gap + rad)*2, "y_axis": gap*4 + rad*3, "radius": rad, "color" : "#00c45a" }
 		   ];
 		   
 		   var legendSvg = d3.select("#legendGOID-svg")
@@ -323,7 +322,7 @@
 								.attr("y2", function(d) {
 										return d.target.y;
 								});
-						//color for lines
+						//color for lines #aqui
 						/*.style("stroke",function(d){
 								 n = graph.nodes.filter(function(el) {
 										return el.id === d.source.id;
@@ -390,14 +389,14 @@
 								.style("cursor", "pointer")
 								.style("fill", function(d, i) {		 
 								   if(d.type==="GOCCID"){
-												if(d.pValue>pValue) return "#ffd900";
-												else return "#fffe51"
+												if(d.pValue>pValue) return "#ffe44d";
+												else return "#ccae00"
 										}else if(d.type==="GOBPID"){
-												if(d.pValue>pValue) return "#c3a6c7";
-												else return "#de5cd7";
+												if(d.pValue>pValue) return "#ceb6d1";
+												else return "#a377a9";
 										}else if(d.type==="GOMFID"){
-												if(d.pValue>pValue) return "#00c429";
-												else return "#00ff36";
+												if(d.pValue>pValue) return "#45ff9a";
+												else return "#00c45a";
 										}		
 								});
 						
@@ -663,14 +662,14 @@
 								.style("cursor", "pointer")
 								.style("fill", function(d, i) {		 
 								   if(d.type==="GOCCID"){
-												if(d.pValue>pValue) return "#ffd900";
-												else return "#fffe51"
+												if(d.pValue>pValue) return "#ffe44d";
+												else return "#ccae00"
 										}else if(d.type==="GOBPID"){
-												if(d.pValue>pValue) return "#c3a6c7";
-												else return "#de5cd7";
+												if(d.pValue>pValue) return "#ceb6d1";
+												else return "#a377a9";
 										}else if(d.type==="GOMFID"){
-												if(d.pValue>pValue) return "#00c429";
-												else return "#00ff36";
+												if(d.pValue>pValue) return "#45ff9a";
+												else return "#00c45a";
 										}		
 								});
 					  
@@ -776,7 +775,7 @@
 												return "+";
 										}
 								});
-						//Color for line
+						//Color for line #AQUI
 						/*link.style("stroke",function(d){
 										 n = nodes.filter(function(el) {
 												return el.id === d.source.id;
