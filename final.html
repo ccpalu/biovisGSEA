@@ -64,7 +64,7 @@
 		<button onclick="setPValue()" style="width:100px">Filter pValue</button>
 		<input type="number" step="any" id="pValue" value="0.1" style="width:50px"><br><br>
 		
-		<label for="legend-svg">The genes are colored according with the logFC:</label>
+		<!--<label for="legend-svg">The genes are colored according with the logFC:</label><br>-->
 		<svg id="legend-svg"></svg><br><br>
 		<svg id="legendGOID-svg"></svg>
 		
@@ -80,16 +80,18 @@
 				});*/
 				var maxlogFC = 5;//#AQUI 
 				var pValue = 0.1;
+				var dim = 32;
 				 
-				/* logFC Legend 
+				/* Gene Legend 
 				adpted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d*/
 				var legendFullHeight = 60;
-				var legendFullWidth = 310;
+				var legendFullWidth = 320;
 				// Margins
-				var legendMargin = { top: 5, bottom: 25, left: 5, right: 5 };
+				var legendMargin = { top: 5, bottom: 25, left: 105, right: 5 };
 				var legendWidth = legendFullWidth - legendMargin.left - legendMargin.right;
 				var legendHeight = legendFullHeight - legendMargin.top - legendMargin.bottom;
-
+        
+      
 				// color range used for  logFC
 				var scale = ["#0000BF", "#0000CF", "#0000DF", "#0000EF", "#0000FF", "#0020FF", "#0040FF",		  								"#0060FF", "#0080FF", "#009FFF","#00BFFF", "#00DFFF", "#00FFFF", "#10FFEF",
 						"#20FFDF", "#30FFCF", "#40FFBF", "#50FFAF", "#60FF9F", "#70FF8F","#80FF80",
@@ -103,7 +105,27 @@
 					  .append("g")
 					  .attr("transform", "translate(" + legendMargin.left + "," +
 					  legendMargin.top + ")");
-										  
+
+				//Coloring Genes and adding rectangle//#aqui
+				legendSvg.append("rect")
+						.attr("x", -100)
+						.attr("y", 0)
+						.attr("width", dim*2.5)
+						.attr("height", dim)
+						.style("fill", "#b3b3b3");
+				legendSvg.append("svg:text")
+						.attr("class", "nodetext")
+						.attr("dx", -97)
+						.attr("dy", dim/2 - 3)
+						.style("font-size", 12)
+						.text("Gene Symbol");
+				legendSvg.append("svg:text")
+						.attr("class", "nodetext")
+						.attr("dx", -97)
+						.attr("dy", dim-5)
+						.style("font-size", 10)
+						.text("DGE p-value");
+														  
 				var gradient = legendSvg.append("defs")
 						.append("linearGradient")
 						.attr("id", "gradient")
@@ -147,7 +169,14 @@
 						.attr("class", "legend axis")
 						.attr("transform", "translate(0," + legendHeight + ")")
 						.call(legendAxis);
-  		  /* end of  Color Legend */
+						
+				legendSvg.append("svg:text")
+						.attr("class", "nodetext")
+						.attr("x", legendWidth/2 - 85)
+						.attr("dy", legendHeight/2 + 5)
+						.style("font-size", 12)
+						.text("Gene color based on the logFC");
+  		  /* end of Genes Legend */
   		  
   		  /* GO legend */
   		  var rad = 20;
@@ -155,16 +184,16 @@
   		  var mar = 180;
   		  
   		  var GOtext = [
-  				 { "x_axis": 23, "y_axis": 30 , "text": "Gene Ontology Domain:", "font-weight" : "bold"},
-  				 { "x_axis": 28, "y_axis": gap*2 + rad -5, "text": "Cellular Component", "font-weight" : "normal"},
-  				 { "x_axis": 60, "y_axis": gap*2 + rad + 12, "text": "(GOCCID)", "font-weight" : "normal"},
-  				 { "x_axis": 33, "y_axis": rad*2 + gap*3 - 5, "text": "Biological Process", "font-weight" : "normal"},
-  				 { "x_axis": 60, "y_axis": rad*2 + gap*3  + 12, "text": "(GOBPID)", "font-weight" : "normal"},
-  				 { "x_axis": 28, "y_axis": rad*3 + gap*4 -5, "text": "Molecullar Function", "font-weight" : "normal"},
-  				 { "x_axis": 60, "y_axis": rad*3 + gap*4 + 12, "text": "(GOMFID)", "font-weight" : "normal"},
-  				 { "x_axis": mar + (gap+rad), "y_axis": 20 , "text": "p-valor", "font-weight" : "normal"},
-  				 { "x_axis": mar + gap - 4, "y_axis": gap*1.5 , "text": "> " + pValue, "font-weight" : "normal"},
-  				 { "x_axis": mar + gap*3 - 4, "y_axis": gap*1.5 , "text": "<= " + pValue, "font-weight" : "normal"}
+  				 { "x_axis": 23, "y_axis": 30 , "text": "Gene Ontology Domain:"},
+  				 { "x_axis": 28, "y_axis": gap*2 + rad -5, "text": "Cellular Component"},
+  				 { "x_axis": 60, "y_axis": gap*2 + rad + 12, "text": "(GOCCID)"},
+  				 { "x_axis": 33, "y_axis": rad*2 + gap*3 - 5, "text": "Biological Process"},
+  				 { "x_axis": 60, "y_axis": rad*2 + gap*3  + 12, "text": "(GOBPID)"},
+  				 { "x_axis": 28, "y_axis": rad*3 + gap*4 -5, "text": "Molecullar Function"},
+  				 { "x_axis": 60, "y_axis": rad*3 + gap*4 + 12, "text": "(GOMFID)"},
+  				 { "x_axis": mar + (gap+rad), "y_axis": 20 , "text": "p-valor"},
+  				 { "x_axis": mar + gap - 4, "y_axis": gap*1.5 , "text": "> " + pValue},
+  				 { "x_axis": mar + gap*3 - 4, "y_axis": gap*1.5 , "text": "<= " + pValue}
   		   ];
 										
 		   var jsonCircles = [
@@ -188,7 +217,6 @@
 		   var textAttributes = text
 						.attr("x", function (d) { return d.x_axis; })
 						.attr("y", function (d) { return d.y_axis; })
-						.attr("style", function (d) { return d.style; })
 						.text(function (d) { return d.text; });
 														  
 		   var circles = legendSvg.selectAll("circle")
@@ -467,7 +495,7 @@
 								});
 
 						//Adding pValue into the nodes
-						node.append("svg:text")//#AQUI
+						node.append("svg:text")//#AQUI DONE
 								.attr("class", "nodetext")
 								.attr("dx", function(d) {
 										if(d.type === "gene"){
@@ -638,7 +666,7 @@
 												.style("opacity", .9);
 										var str = "<b>Name:</b> " + d.name +"<br/>" 
 										    + d.longname + "<br/><b>pValue:</b> " + d.pValue;
-										if(d.type == "gene"){//#AQUI
+										if(d.type == "gene"){//#AQUI DONE
 				  						str += "<br/><b>LogFC: </b>"+d.logFC; 
 				  					}else{
 				  						str += "<br/><b>Type: </b>"+d.type; 
