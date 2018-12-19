@@ -439,7 +439,7 @@
 						node.append("svg:text")
 								.attr("class", "nodetext")
 								.attr("dx", function(d) {
-										if(d.type === "gene"){//#AQUI
+										if(d.type === "gene"){
 											return -dim +5 
 										}else{
 											return 15 
@@ -792,7 +792,7 @@
 						tick();
 				}//end of function update(nodes, links)
 
-				function updateNodesLinks(d) {
+				function updateNodesLinks(d) {//#AQUI
 						var i, j;
 						var node = [];
 						var link = [];
@@ -836,14 +836,14 @@
 						});
 
 						//Final array with the links maintained
-						link = link.concat(linksAux);
-
+						link = link.concat(linksAux)
+						
 
 						//Managing the nodes that are suposed to be Added according to the links
 						graph.nodes.forEach(function(n) {
 
-								//If it isn"t gene, verify if it"s a node without links - Don"t close gene nodes
-						   //if (n.type !== "gene") {
+						    //If it isn"t gene, verify if it"s a node without links - Don"t close gene nodes
+						    if (n.type !== "gene") {
 										if (n.pValue > pValue || n.type === "gene") {
 												var addIt = false;
 												link.forEach(function(l) {
@@ -858,18 +858,19 @@
 										} else {
 												node.push(n);
 										}
-								//} else {
-								 //   node.push(n);
-								//}
+								} else {
+								   node.push(n);
+								}
 
 						});
 
-		  			//Add links between genes and closed nodes that is visible. 
+		  			//Add links between genes and closed nodes that are visible. 
 		  			var linksNodesToGenes = [];
 		  			var linksNodesToGenesFound = []
 		  			node.forEach(function(n) {
 								linksNodesToGenes = graph.links.filter(function(l) {
-				  					if(n.name == l.target.name && l.target.type == "GOBPID" && l.source.type == "gene" ){
+				  					if(n.name === l.target.name && l.source.type === "gene" &&
+				  					(l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){
 				  					  	return true;
 				  					}
 									  return false;
