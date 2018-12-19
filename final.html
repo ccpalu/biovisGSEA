@@ -156,9 +156,12 @@
   		  
   		  var GOtext = [
   				 { "x_axis": 23, "y_axis": 30 , "text": "Gene Ontology Domain:", "font-weight" : "bold"},
-  				 { "x_axis": 28, "y_axis": 5 + gap*2 + rad, "text": "Cellular Component", "font-weight" : "normal"},
-  				 { "x_axis": 33, "y_axis": 5 + rad*2 + gap*3, "text": "Biological Process", "font-weight" : "normal"},
-  				 { "x_axis": 28, "y_axis": 5 + rad*3 + gap*4 , "text": "Molecullar Function", "font-weight" : "normal"},
+  				 { "x_axis": 28, "y_axis": gap*2 + rad -5, "text": "Cellular Component", "font-weight" : "normal"},
+  				 { "x_axis": 60, "y_axis": gap*2 + rad + 12, "text": "(GOCCID)", "font-weight" : "normal"},
+  				 { "x_axis": 33, "y_axis": rad*2 + gap*3 - 5, "text": "Biological Process", "font-weight" : "normal"},
+  				 { "x_axis": 60, "y_axis": rad*2 + gap*3  + 12, "text": "(GOBPID)", "font-weight" : "normal"},
+  				 { "x_axis": 28, "y_axis": rad*3 + gap*4 -5, "text": "Molecullar Function", "font-weight" : "normal"},
+  				 { "x_axis": 60, "y_axis": rad*3 + gap*4 + 12, "text": "(GOMFID)", "font-weight" : "normal"},
   				 { "x_axis": mar + (gap+rad), "y_axis": 20 , "text": "p-valor", "font-weight" : "normal"},
   				 { "x_axis": mar + gap - 4, "y_axis": gap*1.5 , "text": "> " + pValue, "font-weight" : "normal"},
   				 { "x_axis": mar + gap*3 - 4, "y_axis": gap*1.5 , "text": "<= " + pValue, "font-weight" : "normal"}
@@ -360,11 +363,12 @@
 												
 										var str = "<b>Name:</b> " + d.name +"<br/>"+
 												d.longname + "<br/>"+
-												"<b>pValue:</b> " + d.pValue + "<br/>"+
-												"<b>Type: </b>"+d.type;  
+												"<b>pValue:</b> " + d.pValue;  
 										
 				  					if(d.type == "gene"){//#AQUI
 				  						str += "<br/><b>LogFC: </b>"+d.logFC; 
+				  					}else{
+				  						str += "<br/><b>Type: </b>"+d.type; 
 				  					}
 										div .html(str)  
 												.style("left", (d3.event.pageX) + "px")		 
@@ -634,9 +638,11 @@
 												.duration(200)		  
 												.style("opacity", .9);
 										var str = "<b>Name:</b> " + d.name +"<br/>" 
-										    + d.longname + "<br/><b>pValue:</b> " + d.pValue + "<br/><b>Type: </b>"+d.type;
+										    + d.longname + "<br/><b>pValue:</b> " + d.pValue;
 										if(d.type == "gene"){//#AQUI
 				  						str += "<br/><b>LogFC: </b>"+d.logFC; 
+				  					}else{
+				  						str += "<br/><b>Type: </b>"+d.type; 
 				  					}
 				  					div .html(str)  
 												.style("left", (d3.event.pageX) + "px")		 
