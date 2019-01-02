@@ -45,5 +45,5 @@ https://stackoverflow.com/questions/17502661/shiny-open-new-browser-tab-from-wit
 
 ##########################################################################################
 OTHER
+ Option to remove Genes that are no linked to nodes
 
-THe colapsed version of the tree is ignoring the relationships between the GO nodes.
