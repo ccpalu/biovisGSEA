@@ -41,6 +41,9 @@ install.packages("AnnotationForge")
 
 ##########################################################################################
 NEXT:
-  Create a 'STEP 5'
-where there are links to the results being generated and also discover how to ask for the user to wait the files processing
 https://stackoverflow.com/questions/17502661/shiny-open-new-browser-tab-from-within-shiny-app
+
+##########################################################################################
+OTHER
+
+THe colapsed version of the tree is ignoring the relationships between the GO nodes.

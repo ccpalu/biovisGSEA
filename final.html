@@ -299,7 +299,7 @@
 				  
 				//Dísplay nodes on the positions
 						graph.nodes.forEach(function(el) {
-								if (el.type === "gene") {
+					/*			if (el.type === "gene") {
 										if(countGene === 12){
 										  countGene = 0;
 										  countGeneLine ++;
@@ -312,7 +312,7 @@
 										var aux = [];
 										displayTreeRecursively(el);
 										countGene++;
-								} else {
+								} else { */
 										if (el.pValue > pValue) {
 												countPValueAbove++;
 												altAbove++;
@@ -322,8 +322,9 @@
 												el.fixed = true;
 												el.opened = false;
 										}
-								}// if (el.type === "gene")
+							//	}// if (el.type === "gene")
 						});//graph.nodes.forEach(function(el)
+						
 						var force = self.force = d3.layout.force()
 								.nodes(graph.nodes)
 								.links(graph.links)
@@ -351,18 +352,18 @@
 										return d.target.y;
 								});
 						//color for lines #aqui
-						/*.style("stroke",function(d){
-								 n = graph.nodes.filter(function(el) {
-										return el.id === d.source.id;
-								})[0];
-								if (n.type.indexOf("gene") >= 0) return "#ffd900";
-								else {
-										if (d.pValue <= 0.1) {
-												return "#e96a37";
-										} else
-												return "#50a161";
-								} 
-						})*/
+    						/*.style("stroke",function(d){
+    								 n = graph.nodes.filter(function(el) {
+    										return el.id === d.source.id;
+    								})[0];
+    								if (n.type.indexOf("gene") >= 0) return "#ffd900";
+    								else {
+    										if (d.pValue <= 0.1) {
+    												return "#e96a37";
+    										} else
+    												return "#50a161";
+    								} 
+    						})*/
 
 						node_drag = d3.behavior.drag()
 								.on("dragstart", dragstart)
@@ -456,7 +457,7 @@
 								.style("cursor", "pointer")
 								.text(function(d) {
 										if (d.opened) {
-												return "";
+												return "-";
 										} else {
 												return "+";
 										}
@@ -546,6 +547,7 @@
 						});//end of	graph.nodes.forEach(function(el)
 
 						updateNodesLinks();
+						
 				}//end of function init()
 
 				function displayTreeRecursively(node) {//AQUI review
@@ -629,7 +631,7 @@
 						updateNodesLinks(d);
 				}
 
-				function update(nodes, links) {
+				function update(nodes, links) {//#AQUI
 
 						// Update links.
 						link = link.data(links);
@@ -654,8 +656,7 @@
 								.on("click", click)
 								.call(node_drag)
 								.on("mouseover", function(d) {
-										d3.selectAll(".link").attr("class", "link");
-										d3.selectAll(".link")
+										d3.selectAll(".link").attr("class", "link")
 						  					.filter(function(l) {
 						  						  return (l.source === d) || (l.target === d);
 						  					})
@@ -847,7 +848,7 @@
 						});
 						linksToRemove = [];
 						//Iterate through nodes to close one by one
-						graph.nodes.forEach(function(n) {
+						graph.nodes.forEach(function(n) {// #AQUI
 								if (!n.opened) {
 										//Close node and return links to be removed from the link list
 										var linkFinal = removeNodesLinks(n);
@@ -896,7 +897,9 @@
 		  			var linksNodesToGenesFound = []
 		  			node.forEach(function(n) {
 								linksNodesToGenes = graph.links.filter(function(l) {
-				  					if(n.name === l.target.name && l.source.type === "gene" &&
+				  					//if(n.name === l.target.name && l.source.type === "gene" &&
+				  					//(l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){ REMOVED FOR ALLOWING LINKS TO ANY GO DISPLAYED
+				  					if(n.name === l.target.name && 
 				  					(l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){
 				  					  	return true;
 				  					}
@@ -931,7 +934,7 @@
 					  d3.selectAll(".link").attr("class", "link");	
 				}//end of function updateNodesLinks(d)
 
-				function closeAndOpenNodesRecursively(node, open) {
+				function closeAndOpenNodesRecursively(node, open) {//#AQUI
 						var linksFromThatNode = [];
 						//Search for the links that target to the node clicked
 						linksFromThatNode = graph.links.filter(function(link) {
@@ -956,9 +959,10 @@
 
 				function removeNodesLinks(node) {
 						var linksTOThatNode = [];
-						//Search for the links that are target from the node clicked. If the connection is between genes and nodes above pValue, the connection can be removed
+						//Search for the links that are target from the node clicked.
+						//If the connection is between genes and nodes above pValue, the connection can be removed
 						linksTOThatNode = linksAux.filter(function(link) {
-								return (node.name === link.target.name && link.source.type !== "gene") || (node.name === link.target.name && node.pValue > pValue);
+								return (node.name === link.target.name && link.source.type !== "gene") || ((node.name === link.target.name) && node.pValue > pValue);
 						});
 						//Sort the array utilizing it"s pValue
 						linksTOThatNode.sort(function(a, b) {
@@ -1001,8 +1005,9 @@
 								}
 						});
 						arrayAux.forEach(function(l) {
-								//Verify if there"s a target to that node differente from the source
-								if (nodeVerified.id === l.source.id) {
+								//Verify if there"s a target to that node differente from the source #AQUI!!
+								if ((nodeVerified.id === l.target.id) || (nodeVerified.id === l.source.id)) {
+								
 										connected = true;
 								}
 						});
@@ -1036,7 +1041,8 @@
 				}
 				
 				function linspace(start, end, n) {
-				/* From https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d */
+				/* Support the creation of a colour scale 
+				 From https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d */
 						var out = [];
 						var delta = (end - start) / (n - 1);
 		
