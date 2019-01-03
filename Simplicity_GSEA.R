@@ -424,16 +424,16 @@ ui <- fluidPage(
         var mar = 180;
         
         var GOtext = [
-        { "x_axis": 23, "y_axis": 30 , "text": "Gene Ontology Domain:"},
-        { "x_axis": 28, "y_axis": gap*2 + rad -5, "text": "Cellular Component"},
-        { "x_axis": 60, "y_axis": gap*2 + rad + 12, "text": "(GOCCID)"},
-        { "x_axis": 33, "y_axis": rad*2 + gap*3 - 5, "text": "Biological Process"},
-        { "x_axis": 60, "y_axis": rad*2 + gap*3  + 12, "text": "(GOBPID)"},
-        { "x_axis": 28, "y_axis": rad*3 + gap*4 -5, "text": "Molecullar Function"},
-        { "x_axis": 60, "y_axis": rad*3 + gap*4 + 12, "text": "(GOMFID)"},
-        { "x_axis": mar + (gap+rad), "y_axis": 20 , "text": "p-valor"},
-        { "x_axis": mar + gap - 4, "y_axis": gap*1.5 , "text": "> " + pValue},
-        { "x_axis": mar + gap*3 - 4, "y_axis": gap*1.5 , "text": "<= " + pValue}
+        { "x_axis": 23, "y_axis": 30, "text": "Gene Ontology Domain:", "id": "L.god"},
+        { "x_axis": 28, "y_axis": gap*2 + rad -5, "text": "Cellular Component", "id": "L.cc"},
+        { "x_axis": 60, "y_axis": gap*2 + rad + 12, "text": "(GOCCID)", "id": "L.gocc"},
+        { "x_axis": 33, "y_axis": rad*2 + gap*3 - 5, "text": "Biological Process", "id": "L.bp"},
+        { "x_axis": 60, "y_axis": rad*2 + gap*3  + 12, "text": "(GOBPID)", "id": "L.gobp"},
+        { "x_axis": 28, "y_axis": rad*3 + gap*4 -5, "text": "Molecullar Function", "id": "L.mf"},
+        { "x_axis": 60, "y_axis": rad*3 + gap*4 + 12, "text": "(GOMFID)", "id": "L.gomf"},
+        { "x_axis": mar + (gap+rad), "y_axis": 20 , "text": "p-valor", "id": "L.pv"},
+        { "x_axis": mar + gap - 4, "y_axis": gap*1.5 , "text": "> " + pValue, "id": "L.Bpv"},
+        { "x_axis": mar + gap*3 - 4, "y_axis": gap*1.5 , "text": "<= " + pValue, "id": "L.Spv"}
         ];
         
         var jsonCircles = [
@@ -457,7 +457,8 @@ ui <- fluidPage(
         var textAttributes = text
         .attr("x", function (d) { return d.x_axis; })
         .attr("y", function (d) { return d.y_axis; })
-        .text(function (d) { return d.text; });
+        .text(function (d) { return d.text; })
+        .attr("id", function (d) { return d.id; });
         
         var circles = legendSvg.selectAll("circle")
         .data(jsonCircles)
@@ -1268,14 +1269,15 @@ ui <- fluidPage(
         }
         
         function setPValue(){
-        var aux= parseFloat(document.getElementById("pValue").value);
-        pValue = aux;
-        level = 0,countNodesOnLevel=[];
-        for (var i = 0; i < graph.nodes.length; i++) countNodesOnLevel[i] = 0;
-        node = svg.selectAll("g.node").remove();
-        link = svg.selectAll("line.link").remove();
-        
-        init();
+            pValue= parseFloat(document.getElementById("pValue").value);
+            document.getElementById("L.Bpv").innerHTML="> " + pValue;
+            document.getElementById("L.Spv").innerHTML="<= " + pValue;
+            level = 0,countNodesOnLevel=[];
+            for (var i = 0; i < graph.nodes.length; i++) countNodesOnLevel[i] = 0;
+            node = svg.selectAll("g.node").remove();
+            link = svg.selectAll("line.link").remove();
+            
+            init();
         }
         
         function linspace(start, end, n) {
