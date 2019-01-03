@@ -227,7 +227,7 @@ ui <- fluidPage(
                       <button onclick="linkUnlink()" style="width:120px">Link/Unlink</button><br><br>
                       <button id="graphstatic" onclick="freeze()" style="width:120px">Freeze/Unfreeze</button><br><br>
                       <h6>p-value threshold</h6>
-                      <input type="number" step="any" id="pValue" value="0.1" style="width:50px">
+                      <input type="number" id="pValue" value="0.1" step="0.01" max="0.1" min="0.0000000001" style="width:120px" style="align:center">
                       <button onclick="setPValue()" style="width:120px">Filter p-value</button><br><br>
                   ')),
                   tags$hr()
