@@ -45,5 +45,7 @@ https://stackoverflow.com/questions/17502661/shiny-open-new-browser-tab-from-wit
 
 ##########################################################################################
 OTHER
- Option to remove Genes that are no linked to nodes
+
+ Include the analysis option MP, CC, BP, p-value
+ Fix step 2 because for single gene list is not recognising the symbols
 
