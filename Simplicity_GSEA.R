@@ -608,7 +608,7 @@ ui <- fluidPage(
           .attr("y2", function(d) {
           return d.target.y;
           });
-          //color for lines #aqui
+          //color for lines
           /*.style("stroke",function(d){
           n = graph.nodes.filter(function(el) {
           return el.id === d.source.id;
@@ -795,9 +795,7 @@ ui <- fluidPage(
           } else {
           countPValueAbove++;
           altAbove++;
-          if (altAbove === 4) altAbove = 0;
-          el.x = 100 + 30 * countPValueAbove;
-          el.y = 400 + (40 * countGeneLine) + 50 * altAbove;
+          
           el.fixed = true;
           el.opened = false;
           }
@@ -923,7 +921,7 @@ ui <- fluidPage(
           div.transition()				
           .duration(200)		  
           .style("opacity", .9);
-          var str = "<b>Name:</b> " + d.name +"<br/>" + d.longname;
+          var str = "<b>Name:</b> " + d.name +"<br/>" + d.longname + "<br/>" ;
           if(d.type == "gene"){
           str += "<b>DGE p-value:</b> " + d.pValue + "<br/><b>LogFC: </b>"+d.logFC; 
           }else{
@@ -1061,7 +1059,7 @@ ui <- fluidPage(
           return "+";
           }
           });
-          //Color for line #AQUI
+          //Color for line
           /*link.style("stroke",function(d){
           n = nodes.filter(function(el) {
           return el.id === d.source.id;
@@ -1133,7 +1131,7 @@ ui <- fluidPage(
           var addIt = false;
           link.forEach(function(l) {
           
-          if (n.id === l.source.id) {
+          if (n.id === l.source.id || n.id === l.target.id) {
           addIt = true;
           }
           });
@@ -1155,8 +1153,8 @@ ui <- fluidPage(
           node.forEach(function(n) {
           linksNodesToGenes = graph.links.filter(function(l) {
           //if(n.name === l.target.name && l.source.type === "gene" &&
-          //(l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){ REMOVED FOR ALLOWING LINKS TO ANY GO DISPLAYED
-          if(n.name === l.target.name && 
+          //(l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){ #AQUI REMOVED FOR ALLOWING LINKS TO ANY GO DISPLAYED//n.children === null
+          if((n.name === l.target.name) && 
           (l.target.type === "GOBPID" || l.target.type === "GOCCID" || l.target.type === "GOMFID") ){
           return true;
           }

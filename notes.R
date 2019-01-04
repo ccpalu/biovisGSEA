@@ -45,5 +45,5 @@ https://stackoverflow.com/questions/17502661/shiny-open-new-browser-tab-from-wit
 
 ##########################################################################################
 OTHER
- Option to remove Genes that are no linked to nodes
+ Fix the nods between 0.1 and the threshold because they no longer appear
 
