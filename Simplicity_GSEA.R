@@ -6,8 +6,8 @@
 # Shiny document for inputting#
 # data to do GSEA    #
 #                             #
-# 30/11/2018                  #
-# version: 0.11               #
+# 04/01/2019                  #
+# version: 0.2               #
 #         under development   #
 ###############################
 ###############################
@@ -228,7 +228,7 @@ ui <- fluidPage(
               <button id="graphunlink"style="color:grey;width:120px" disabled = true>Link/Unlink</button><br><br>
               <button id="graphstatic" style="color:grey;width:120px" disabled = true>Freeze/Unfreeze</button><br><br>
               <h6>p-value threshold</h6>
-              <input type="number" id="pValue" value="0.1" step="0.01" max="0.1" min="0.0000000001" style="width:120px;">
+              <input type="number" id="pValue" value="0.1" step="0.01" max="0.1" min="0.0000000000" style="width:120px;">
               <button id="graphfilterp" style="color:grey;width:120px" disabled = true>Filter p-value</button><br><br>
               <input type="checkbox" id="filterGeneNodes" disabled = true"> Remove disconected genes<br><br>
               ')),
@@ -615,7 +615,7 @@ ui <- fluidPage(
           })[0];
           if (n.type.indexOf("gene") >= 0) return "#ffd900";
           else {
-          if (d.pValue <= 0.1) {
+          if (d.pValue <= pValue) {
           return "#e96a37";
           } else
           return "#50a161";
@@ -1068,7 +1068,7 @@ ui <- fluidPage(
           })[0];
           if (n.type.indexOf("gene") >= 0) return "#ffd900";
           else {
-          if (d.pValue <= 0.1) {
+          if (d.pValue <= pValue) {
           return "#2daec6";
           } else
           return "#50a161";
