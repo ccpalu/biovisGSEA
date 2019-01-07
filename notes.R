@@ -46,6 +46,6 @@ https://stackoverflow.com/questions/17502661/shiny-open-new-browser-tab-from-wit
 ##########################################################################################
 OTHER
 
- Include the analysis option MP, CC, BP, p-value
- Fix step 2 because for single gene list is not recognising the symbols
+Include the analysis option MP, CC, BP, p-value
+Fix step 2 because for single gene list is not recognising the symbols
 
