@@ -1343,16 +1343,16 @@ server <- function(input, output, session) {
     which(genomes$Species == input$species)
   })
   
-  # Table uploaded on Step 2
+  # Table uploaded on Step 2 #AQUI
   data1 <- reactive({
-    #validate(need(input$file1, "Please upload a file"))
+   
     inFile <- input$geneSet.file
     
     if (is.null(inFile))
       return(NULL)
     
-    read.csv(inFile$datapath, header=input$header, sep=input$sep,
-      quote=input$quote)
+    as.data.frame(read.csv(inFile$datapath, header=input$header, sep=input$sep,
+      quote=input$quote))
   })#data1
   
   
@@ -1465,7 +1465,7 @@ server <- function(input, output, session) {
   output$dataset <- renderDataTable(data1(),options = list(
     pageLength = 10))# output$dataset
   
-  output$colnames.gene <- renderUI({
+  output$colnames.gene <- renderUI({ #AQUI
     selectInput(inputId = "header.gene", label = "Gene IDs column:",
       choices = c("",colnames(data1())))
   })
@@ -1756,7 +1756,7 @@ server <- function(input, output, session) {
       if(step2.status() && step3.status()){
         actionButton("start.gsea", "Start GSEA")
       tryCatch({
-        if(gene.ann()==""){
+        if(gene.ann() == ""){
           paste("Please, complete all steps to enable GSEA.")
         }else{
           actionButton("start.gsea", "Start GSEA")

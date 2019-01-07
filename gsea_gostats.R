@@ -35,8 +35,7 @@ doGO <- function(name, gnId, uni, db, pvalue,
       conditional = FALSE,
       testDirection = "over")
     hgOver <- hyperGTest(params)
-    #save(hgOver,file = paste(name, i, "hgOver.RData", sep = "."))
-    # htmlReport(hgOver, file = paste(name, i, "hgOver.html", sep = "."), summary.args = list("htmlLinks" = TRUE))
+    
     return(summary(hgOver,"htmlLinks" = TRUE))
   }
   
