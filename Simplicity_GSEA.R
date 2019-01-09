@@ -317,14 +317,7 @@ ui <- fluidPage(
           <body>
           
           <script type="text/javascript">
-          //Loading json file
-          // Error: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https
-          /*d3.json("graph.json", function(error, json) {
-          if (error) throw error;
-          
-          root = json;
-          update();
-          });*/
+      
           var maxlogFC = 5;
           var pValue = 0.1;
           var dim = 32;
@@ -1847,7 +1840,8 @@ server <- function(input, output, session) {
       
     # Plotting for Graph Step 6
     observe({
-      session$sendCustomMessage(type="SendObjectToClientDynamicCallbackHandler", as.character(toJSON(results$graph)))#     
+      session$sendCustomMessage(type="SendObjectToClientDynamicCallbackHandler", as.character(toJSON(results$graph)))
+      write(toJSON(results$graph),paste0('mygraph',Sys.Date(), '.json'))
     })#observe
     
     
